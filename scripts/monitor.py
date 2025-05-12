@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 
 # Configuration
 host = os.getenv("PING_HOST", "us-east-2.console.aws.amazon.com")  # Host to ping (can be overridden with an environment variable)
-logfile = "status_log.csv"  # Log file for status
+#logfile = "status_log.csv"  # Log file for status
+logfile = os.path.join(os.getcwd(), "status_log.csv")
 sparkline_file = "docs/sparkline.png"  # Output file for sparkline visualization
 
 # Setup ping command based on platform
@@ -38,16 +39,23 @@ def main():
     now = datetime.datetime.utcnow().isoformat()
     status = "Up" if success else "Down"
 
-    # Ensure log file exists with a header
-    if not os.path.exists(logfile):
-        with open(logfile, "w", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow(["timestamp", "status"])
+    try:
+        # Ensure log file exists with a header
+        if not os.path.exists(logfile):
+            print(f"Creating log file at: {logfile}")
+            with open(logfile, "w", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow(["timestamp", "status"])
 
-    # Append current result to the log
-    with open(logfile, "a", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow([now, status])
+        # Append current result to the log
+        print(f"Appending to log file at: {logfile}")
+        with open(logfile, "a", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow([now, status])
+
+        print("Log updated successfully.")
+    except Exception as e:
+        print(f"Error writing to log file: {e}")
 
     # Generate sparkline visualization
     generate_sparkline()
