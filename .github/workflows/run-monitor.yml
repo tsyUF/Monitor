@@ -1,8 +1,9 @@
 name: Run Monitor Script
 
 on:
-  schedule:
-    - cron: '0 * * * *' # Runs every hour
+# remove both comments to get schedule running again
+#  schedule:
+#    - cron: '0 * * * *' # Runs every hour
   workflow_dispatch: # Allows manual runs
 
 jobs:
