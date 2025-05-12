@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 host = os.getenv("PING_HOST", "us-east-2.console.aws.amazon.com")  # Host to ping (can be overridden with an environment variable)
 #logfile = "status_log.csv"  # Log file for status
 logfile = os.path.join(os.getcwd(), "status_log.csv")
+print(f"Log file path: {logfile}")
 sparkline_file = "docs/sparkline.png"  # Output file for sparkline visualization
 
 # Setup ping command based on platform
