@@ -6,6 +6,19 @@ import os
 import shutil
 import pandas as pd
 import matplotlib.pyplot as plt
+import json
+from datetime import datetime
+
+
+# Example status data
+status_data = {
+    "serverStatus": "All systems operational",
+    "lastUpdated": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+}
+
+# Write the data to status.json
+with open("docs/status.json", "w") as f:
+    json.dump(status_data, f)
 
 # Configuration
 host = os.getenv("PING_HOST", "us-east-2.console.aws.amazon.com")  # Host to ping (can be overridden with an environment variable)
