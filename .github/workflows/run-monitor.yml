@@ -4,8 +4,19 @@ on:
   schedule:
     - cron: '0 * * * *' # Runs every hour
   workflow_dispatch: # Allows manual runs
-
+  
 jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy with Quarto
+        uses: quarto-dev/quarto-actions@v1
+#        with:
+          # Add required inputs here
+# jobs:
   run-monitor:
     runs-on: ubuntu-latest
 
