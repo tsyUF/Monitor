@@ -15,7 +15,7 @@ jobs:
 
       - name: Deploy with Quarto
         # Change to a valid version or remove if not needed
-        uses: quarto-dev/quarto-actions@v1
+        uses: quarto-dev/quarto-actions@v2
         with:
           project_path: "."  # Path to your project root (adjust as needed)
           output_dir: "docs" # Output directory for Quarto builds
