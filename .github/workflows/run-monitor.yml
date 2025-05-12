@@ -14,9 +14,10 @@ jobs:
 
       - name: Deploy with Quarto
         uses: quarto-dev/quarto-actions@v1
-#        with:
-          # Add required inputs here
-# jobs:
+        with:
+          # Add required inputs here (if necessary)
+          # Example: project_path: "."
+
   run-monitor:
     runs-on: ubuntu-latest
 
