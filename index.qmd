@@ -1,0 +1,14 @@
+---
+title: "Monitoring Dashboard"
+format: html
+---
+
+# Welcome to the Monitoring Dashboard
+
+This is the main page of your monitoring dashboard. You can add more sections, graphs, or other content here.
+
+## Section 1: Overview
+This is an example overview section.
+
+## Section 2: Details
+You can include additional details or visualizations in this section.
