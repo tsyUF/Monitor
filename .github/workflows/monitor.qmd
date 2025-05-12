@@ -19,7 +19,7 @@ permissions:
 ...
 # Set up Quarto
 - name: Set up Quarto
-  uses: quarto-dev/quarto-actions/setup@v2
+  uses: quarto-dev/quarto-actions/setup@v1
 
 # Render Quarto Project
 - name: Render Quarto Project
