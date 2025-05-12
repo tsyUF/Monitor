@@ -1,0 +1,22 @@
+---
+title: "Monitoring Dashboard"
+format: html
+execute:
+  echo: false
+---
+
+```{r}
+# Load required libraries
+library(jsonlite)
+library(dplyr)
+library(ggplot2)
+
+# Load data
+data <- fromJSON("data/results.json")
+
+# Prepare success/failure table
+summary <- data %>%
+  group_by(resource) %>%
+  summarize(success_rate = mean(status == "success") * 100)
+
+summary
