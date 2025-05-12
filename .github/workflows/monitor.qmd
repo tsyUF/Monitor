@@ -11,6 +11,21 @@ library(jsonlite)
 library(dplyr)
 library(ggplot2)
 
+...
+permissions:
+  contents: write     # Add permission to write to repository
+...
+
+...
+# Set up Quarto
+- name: Set up Quarto
+  uses: quarto-dev/quarto-actions/setup@v2
+
+# Render Quarto Project
+- name: Render Quarto Project
+  run: quarto render
+...
+
 # Load data
 data <- fromJSON("data/results.json")
 
