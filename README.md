@@ -11,3 +11,6 @@ This repository monitors external spaces by pinging a specified host and visuali
 1. Clone the repository:
    ```bash
    git clone https://github.com/tsyUF/Monitor.git
+
+## EVENTUALLY you can go here:
+https://tsyuf.github.io/Monitor/
