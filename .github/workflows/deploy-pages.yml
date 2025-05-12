@@ -30,3 +30,6 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: _site # Directory where Quarto renders the output
+    
+    - name: Run monitor script
+      run: python scripts/monitor.py
