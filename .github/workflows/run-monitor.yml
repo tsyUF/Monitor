@@ -12,9 +12,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Deploy with Quarto
-        uses: quarto-dev/quarto-actions@v1
-        with:
+#      - name: Deploy with Quarto
+#        uses: quarto-dev/quarto-actions@v2
+#        with:
           # Add required inputs here (if necessary)
           # Example: project_path: "."
 
