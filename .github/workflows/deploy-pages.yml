@@ -17,8 +17,7 @@ jobs:
 
     # Step 2: Set up Quarto
     - name: Set up Quarto
-      uses: quarto-dev/quarto-actions@v2
-
+      uses:   uses: quarto-dev/quarto-actions/setup@v2
     # Step 3: Render the Quarto project
     - name: Render Quarto site
       run: |
