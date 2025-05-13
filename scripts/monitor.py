@@ -113,15 +113,16 @@ def generate_sparkline():
         data = df["value"].tolist()
 
         # Plot sparkline
-        plt.figure(figsize=(2, 0.5))
-        plt.plot(data, color='tab:green', linewidth=1)
+        plt.figure(figsize=(4, 1))  # Increased size for better visibility
+        plt.plot(data, color='tab:green', linewidth=1.5)
         plt.ylim(-0.1, 1.1)
         plt.axis('off')  # Remove axes for sparkline style
+        plt.margins(x=0)  # Remove extra margins around the plot
         plt.tight_layout()
 
         # Save the sparkline figure
         os.makedirs(os.path.dirname(sparkline_file), exist_ok=True)
-        plt.savefig(sparkline_file)
+        plt.savefig(sparkline_file, dpi=150)  # Export with higher resolution
         plt.close()
         logging.info(f"Sparkline saved to {sparkline_file}")
     except FileNotFoundError as e:
@@ -130,6 +131,5 @@ def generate_sparkline():
         logging.error(f"Error parsing log file for sparkline generation: {e}")
     except Exception as e:
         logging.error(f"Failed to generate sparkline: {e}")
-
 if __name__ == "__main__":
     main()
