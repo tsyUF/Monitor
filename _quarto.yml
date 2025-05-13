@@ -1,10 +1,9 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "My Monitoring Dashboard"
   navbar:
     left:
-      - text: "Home"
-        href: index.qmd
-  output-dir: docs
+      - href: index.qmd
