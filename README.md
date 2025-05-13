@@ -1,6 +1,6 @@
 # Monitor
 
-This repository monitors external spaces by pinging a specified host and visualizing the results.
+This repository monitors external spaces by pinging a specified host and visualizing the results. It is based on https://autonomousecon.substack.com/p/build-a-self-updating-landing-page
 
 ## Features
 - Pings the host `us-east-2.console.aws.amazon.com` (default).
