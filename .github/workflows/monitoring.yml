@@ -26,6 +26,9 @@ jobs:
         run: |
           python monitor.py
 
+      - name: Install Dependencies
+        run: pip install pandas matplotlib
+
       - name: Commit Results
         run: |
           git config --global user.name "GitHub Actions"
