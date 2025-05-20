@@ -20,20 +20,18 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests pandas
+          pip install pandas matplotlib
 
       - name: Ping Resources
+        env:
+          PING_TARGETS: "google.com,8.8.8.8,github.com"
         run: |
-          python monitor.py
-
-      - name: Install Dependencies
-        run: pip install pandas matplotlib
+          python scripts/monitor.py
 
       - name: Commit Results
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          # git add data/results.json
-          git add docs/status.json docs/sparkline.png status_log.csv
+          git add data/results.json docs/status.json docs/sparkline_*.png
           git commit -m "Update monitoring results [skip ci]" || echo "No changes to commit"
           git push
