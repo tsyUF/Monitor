@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "System Status Overview",
+    "section": "",
+    "text": "This page provides a high-level overview of our monitored services. For a more detailed breakdown of each service’s current status and historical uptime, please refer to the full report.\n\n\nFor a comprehensive analysis, including uptime percentages, status history, and individual sparklines for all monitored services, please see the:\nFull Monitoring Report (monitoring_report.html)\n\n\n\nHere’s a quick visual representation of the recent status for one of our key services. This is an example, and the full report contains data for all monitored targets.\n\n\n\n\n\nGoogle Status Sparkline\n\n\nThis sparkline shows the recent uptime status for google.com. Green indicates ‘Up’, and the graph represents a summary over time (actual representation depends on data points available).\n\nThis dashboard is automatically updated. Last update time can be found in the full monitoring report."
+  },
+  {
+    "objectID": "index.html#detailed-monitoring-report",
+    "href": "index.html#detailed-monitoring-report",
+    "title": "System Status Overview",
+    "section": "",
+    "text": "For a comprehensive analysis, including uptime percentages, status history, and individual sparklines for all monitored services, please see the:\nFull Monitoring Report (monitoring_report.html)"
+  },
+  {
+    "objectID": "index.html#quick-glance-example-service-status",
+    "href": "index.html#quick-glance-example-service-status",
+    "title": "System Status Overview",
+    "section": "",
+    "text": "Here’s a quick visual representation of the recent status for one of our key services. This is an example, and the full report contains data for all monitored targets.\n\n\n\n\n\nGoogle Status Sparkline\n\n\nThis sparkline shows the recent uptime status for google.com. Green indicates ‘Up’, and the graph represents a summary over time (actual representation depends on data points available).\n\nThis dashboard is automatically updated. Last update time can be found in the full monitoring report."
+  }
+]
