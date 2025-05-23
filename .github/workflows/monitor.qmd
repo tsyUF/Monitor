@@ -27,7 +27,7 @@ permissions:
 ...
 
 # Load data
-results_json_path <- "../../data/results.json" # Path relative to the QMD file
+results_json_path <- "../../docs/data/results.json" # Path relative to the QMD file
 
 if (!file.exists(results_json_path)) {
   cat("Error: `data/results.json` not found at `", results_json_path, "`. Please ensure the monitor script has run successfully and the path is correct relative to the Quarto document.\n")

@@ -34,14 +34,11 @@ except Exception as e:
 # Configuration
 ping_targets_env = os.getenv("PING_TARGETS")
 if not ping_targets_env:
-    logging.error("PING_TARGETS environment variable is not set or empty. Please set it to a comma-separated list of targets.")
-    # Defaulting to a predefined list as per potential future enhancement, but exiting for now.
-    # targets = ["google.com", "8.8.8.8"]
-    # logging.info(f"Using default targets: {targets}")
-    exit(1) # Exit if not set, as per current requirements
-
-targets = [target.strip() for target in ping_targets_env.split(',')]
-logging.info(f"Targets to ping: {targets}")
+    targets = ["google.com", "github.com"]
+    logging.warning(f"PING_TARGETS environment variable is not set or empty. Using default targets: {targets}")
+else:
+    targets = [target.strip() for target in ping_targets_env.split(',')]
+    logging.info(f"Targets to ping: {targets}")
 
 # logfile = os.path.join(os.getcwd(), "status_log.csv") # Existing log file for single host status - REMOVED
 # logging.info(f"Legacy log file path (single host status): {logfile}") - REMOVED
@@ -114,11 +111,24 @@ def main():
     logging.info("Completed processing all targets.")
     logging.info(f"Aggregated ping results (in-memory): {ping_results}")
 
-    # Create 'data/' directory and write results to 'data/results.json'
-    results_file_path = "data/results.json"
+    # Ensure data/results.json is always created with some content
+    if not ping_results:
+        logging.info("No ping results were collected. Generating pseudo-data for default targets.")
+        current_time_iso = datetime.utcnow().isoformat()
+        default_fallback_targets = ["google.com", "github.com"]
+        for target_host in default_fallback_targets:
+            ping_results.append({
+                "resource": target_host,
+                "status": "Unknown",
+                "timestamp": current_time_iso
+            })
+        logging.debug(f"Generated pseudo-data: {ping_results}")
+
+    # Create 'docs/data/' directory and write results to 'docs/data/results.json'
+    results_file_path = "docs/data/results.json"
     try:
-        os.makedirs("data", exist_ok=True)
-        logging.info(f"Ensured 'data' directory exists.")
+        os.makedirs("docs/data", exist_ok=True)
+        logging.info(f"Ensured 'docs/data' directory exists.")
         with open(results_file_path, "w") as f:
             json.dump(ping_results, f, indent=2)
         logging.info(f"Successfully wrote ping results to {results_file_path}")
