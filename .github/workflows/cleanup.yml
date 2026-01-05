@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Delete old workflow runs
-        uses: Monitor/delete-workflow-runs@v1
+        uses: Mattraks/delete-workflow-runs
         with:
           repository: ${{ github.repository }}
           retain_days: 30 # Keep runs from the last 30 days
