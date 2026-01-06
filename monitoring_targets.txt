@@ -4,4 +4,8 @@ ufadvancement.quickbase.com
 my.ufl.edu
 google.com
 github.com
-test.com
+cloudflare.com
+facebook.com
+amazon.com
+apple.com
+microsoft.com
