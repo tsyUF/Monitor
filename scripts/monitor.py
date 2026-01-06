@@ -1,12 +1,10 @@
 import platform
 import subprocess
 import datetime
-import csv
 import os
 import shutil
 import pandas as pd
 import matplotlib.pyplot as plt
-import json
 import logging
 from datetime import datetime
 
@@ -17,20 +15,6 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-# Example status data
-status_data = {
-    "serverStatus": "All systems operational",
-    "lastUpdated": datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
-}
-
-# Write the data to status.json
-try:
-    with open("docs/status.json", "w") as f:
-        json.dump(status_data, f)
-    logging.info("Status data written to docs/status.json successfully.")
-except Exception as e:
-    logging.error(f"Failed to write status data to docs/status.json: {e}")
-
 # Configuration
 ping_targets_env = os.getenv("PING_TARGETS")
 if not ping_targets_env:
@@ -39,11 +23,6 @@ if not ping_targets_env:
 else:
     targets = [target.strip() for target in ping_targets_env.split(',')]
     logging.info(f"Targets to ping: {targets}")
-
-# logfile = os.path.join(os.getcwd(), "status_log.csv") # Existing log file for single host status - REMOVED
-# logging.info(f"Legacy log file path (single host status): {logfile}") - REMOVED
-# sparkline_file = "docs/sparkline.png"  # REMOVED - No longer a single sparkline file
-# logging.info(f"Sparkline file (based on legacy log): {sparkline_file}") # REMOVED
 
 # Setup ping command based on platform
 param = "-n" if platform.system().lower() == "windows" else "-c"
@@ -75,8 +54,6 @@ def main():
 
     if not ping_command_available:
         logging.error("Ping command is not available and could not be installed. Exiting.")
-        # Storing a status for this situation might be useful in a real system
-        # For now, just exit.
         exit(1)
 
     for target_host in targets:
@@ -85,8 +62,6 @@ def main():
         success = False # Default to False for each target
 
         try:
-            # Attempt to ping; success if return code is 0
-            # Using subprocess.run for consistency and better error capture if needed, though call is fine for just exit code
             result = subprocess.run(command, capture_output=True, text=True, timeout=10) # Added timeout
             if result.returncode == 0:
                 success = True
@@ -111,7 +86,7 @@ def main():
     logging.info("Completed processing all targets.")
     logging.info(f"Aggregated ping results (in-memory): {ping_results}")
 
-    # Ensure data/results.json is always created with some content
+    # Ensure data is always created with some content
     if not ping_results:
         logging.info("No ping results were collected. Generating pseudo-data for default targets.")
         current_time_iso = datetime.utcnow().isoformat()
@@ -124,21 +99,86 @@ def main():
             })
         logging.debug(f"Generated pseudo-data: {ping_results}")
 
-    # Create 'docs/data/' directory and write results to 'docs/data/results.json'
-    results_file_path = "docs/data/results.json"
-    try:
-        os.makedirs("docs/data", exist_ok=True)
-        logging.info(f"Ensured 'docs/data' directory exists.")
-        with open(results_file_path, "w") as f:
-            json.dump(ping_results, f, indent=2)
-        logging.info(f"Successfully wrote ping results to {results_file_path}")
-    except IOError as e:
-        logging.error(f"I/O error writing to {results_file_path}: {e}")
-    except Exception as e:
-        logging.error(f"Unexpected error writing to {results_file_path}: {e}")
-
     # Generate sparkline visualization for each target
     generate_sparkline(ping_results)
+
+    # Generate HTML report
+    generate_html_report(ping_results)
+
+def generate_html_report(ping_results_data):
+    # Function to sanitize resource names for filenames, matching generate_sparkline
+    def sanitize_resource_name(name):
+        return "".join(c if c.isalnum() or c == '-' else '_' for c in name)
+
+    # Start of HTML
+    html_content = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Status</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 2em; background-color: #f8f9fa; color: #212529; }
+        h1, h2 { color: #343a40; }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1em; }
+        .service { background-color: #fff; border: 1px solid #dee2e6; padding: 1.5em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .service h3 { margin-top: 0; }
+        .up { color: #28a745; font-weight: bold; }
+        .down { color: #dc3545; font-weight: bold; }
+        img { max-width: 100%; height: auto; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>System Status</h1>
+"""
+
+    if not ping_results_data:
+        html_content += "<p>No monitoring results found.</p>"
+    else:
+        try:
+            # Assuming all timestamps in a run are similar, use the first one for "Last Checked"
+            last_checked_str = ping_results_data[0].get('timestamp', 'N/A')
+            if last_checked_str != 'N/A':
+                last_checked = datetime.fromisoformat(last_checked_str).strftime('%Y-%m-%d %H:%M:%S UTC')
+            else:
+                last_checked = "N/A"
+            html_content += f"<h2>Last Checked: {last_checked}</h2>"
+        except (ValueError, KeyError):
+            last_checked = "N/A"
+            html_content += f"<h2>Last Checked: {last_checked}</h2>"
+
+        html_content += '<div class="service-grid">'
+        for item in ping_results_data:
+            resource = item.get("resource", "N/A")
+            status = item.get("status", "Unknown")
+            sanitized_name = sanitize_resource_name(resource)
+            sparkline_path = f"sparkline_{sanitized_name}.png"
+            status_class = "up" if status == "Up" else "down"
+
+            html_content += f"""
+    <div class="service">
+        <h3>{resource}</h3>
+        <p><strong>Status:</strong> <span class="{status_class}">{status}</span></p>
+        <img src="{sparkline_path}" alt="{resource} Uptime Sparkline">
+    </div>
+"""
+        html_content += '</div>'
+
+    # End of HTML
+    html_content += """
+</body>
+</html>
+"""
+
+    # Write to file
+    try:
+        os.makedirs("docs", exist_ok=True)
+        with open("docs/index.html", "w") as f:
+            f.write(html_content)
+        logging.info("Generated HTML report at docs/index.html")
+    except IOError as e:
+        logging.error(f"I/O error writing to docs/index.html: {e}")
 
 def generate_sparkline(ping_results_data):
     if not ping_results_data or not isinstance(ping_results_data, list):
@@ -171,38 +211,21 @@ def generate_sparkline(ping_results_data):
 
             # Map status to numeric values (1 for Up, 0 for Down)
             resource_df['value'] = resource_df['status'].map({"Up": 1, "Down": 0})
-
-            # Resample to ensure consistent intervals (e.g., every 6 hours)
-            # Since data/results.json is overwritten each run, it likely contains only one point per resource.
-            # Resampling will still work but might produce a single point or a flat line.
-            # The .last() after resample might be problematic if there's only one point.
-            # Using .mean() or .first() might be more robust for single points, or simply plot the points.
-            # For now, sticking to existing logic as much as possible.
-            # If a resource has only one entry, resampling might lead to an empty series if not careful.
-            # Let's ensure there's data before resampling.
-            if resource_df.empty: # Double check after map
-                 logging.warning(f"No data after mapping status for resource '{resource_name}'. Skipping its sparkline.")
-                 continue
-
-            # Set index for resampling
-            # It's crucial that timestamps are unique per resource for resampling, or handle duplicates
-            resource_df = resource_df.set_index('timestamp')
             
-            # The problem mentions "last 7 days" for original sparkline, but current data is per-run.
-            # So, the 7-day window logic is not directly applicable here without data accumulation.
-            # We will plot all available points from the current run for this resource.
-            # Resample to 6H intervals, forward fill, and then fill remaining NaNs with 0
-            # This handles cases with sparse data better than just .last()
-            data_series = resource_df['value'].resample("6h").mean().fillna(method="ffill").fillna(0)
-            
-            if data_series.empty:
-                logging.warning(f"Data series is empty for resource '{resource_name}' after resampling. Skipping its sparkline.")
+            if resource_df['value'].isnull().all():
+                logging.warning(f"No valid status data to plot for resource '{resource_name}'. Skipping its sparkline.")
                 continue
-                
-            data = data_series.tolist()
+
+            # Set index for time-based operations
+            resource_df = resource_df.set_index('timestamp')
+
+            # We'll create a simple list of values for plotting.
+            # If there's only one point, we can duplicate it to form a flat line.
+            data = resource_df['value'].tolist()
+            if len(data) == 1:
+                data.append(data[0]) # Duplicate the single point to draw a line
 
             # Sanitize resource_name for filename
-            # Replace common problematic characters with underscore
             sanitized_resource_name = "".join(c if c.isalnum() or c == '-' else '_' for c in resource_name)
             
             sparkline_output_path = f"docs/sparkline_{sanitized_resource_name}.png"
@@ -211,7 +234,7 @@ def generate_sparkline(ping_results_data):
 
             # Plot sparkline
             plt.figure(figsize=(4, 1))
-            plt.plot(data, color='tab:green', linewidth=1.5)
+            plt.plot(data, color='tab:green' if data[0] == 1 else 'tab:red', linewidth=2)
             plt.ylim(-0.1, 1.1)
             plt.axis('off')
             plt.margins(x=0)
@@ -223,6 +246,7 @@ def generate_sparkline(ping_results_data):
 
         except Exception as e:
             logging.error(f"Failed to generate sparkline for resource '{resource_name}': {e}", exc_info=True)
+
 
 if __name__ == "__main__":
     main()
