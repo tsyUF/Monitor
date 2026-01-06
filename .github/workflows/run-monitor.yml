@@ -1,6 +1,11 @@
 name: Run Monitor Script
 
 on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 * * * *' # Run every hour
   workflow_dispatch: # Allows manual runs
 
 jobs:
@@ -20,6 +25,11 @@ jobs:
 
       - name: Install dependencies
         run: pip install pandas matplotlib
+
+      - name: Clean previous artifacts
+        run: |
+          rm -f docs/index.html
+          rm -f docs/sparkline_*.png
 
       - name: Run monitor script
         run: python scripts/monitor.py
