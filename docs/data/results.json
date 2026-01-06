@@ -88,5 +88,35 @@
     "resource": "microsoft.com",
     "status": "Down",
     "timestamp": "2026-01-06T20:09:38.691839+00:00"
+  },
+  {
+    "resource": "uff.lightning.force.com",
+    "status": "Down",
+    "timestamp": "2026-01-06T21:09:37.393646+00:00"
+  },
+  {
+    "resource": "ph12258.us-east-2.aws.snowflakecomputing.com",
+    "status": "Down",
+    "timestamp": "2026-01-06T21:09:47.405630+00:00"
+  },
+  {
+    "resource": "ufadvancement.quickbase.com",
+    "status": "Up",
+    "timestamp": "2026-01-06T21:09:47.452600+00:00"
+  },
+  {
+    "resource": "my.ufl.edu",
+    "status": "Up",
+    "timestamp": "2026-01-06T21:09:47.577867+00:00"
+  },
+  {
+    "resource": "google.com",
+    "status": "Up",
+    "timestamp": "2026-01-06T21:09:47.594846+00:00"
+  },
+  {
+    "resource": "github.com",
+    "status": "Up",
+    "timestamp": "2026-01-06T21:09:47.629340+00:00"
   }
 ]
