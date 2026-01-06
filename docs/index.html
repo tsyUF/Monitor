@@ -1,55 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor Status</title>
-    <script>
-        // Fetch the monitoring data dynamically
-        async function fetchMonitorStatus() {
-            try {
-                const response = await fetch('status.json'); // Replace 'status.json' with the actual file or API endpoint
-                if (!response.ok) {
-                    throw new Error('Failed to fetch status data');
-                }
-                const data = await response.json();
-                document.getElementById('monitor-status').innerHTML = `
-                    <p>Server Status: ${data.serverStatus}</p>
-                    <p>Last Updated: ${data.lastUpdated}</p>
-                `;
-            } catch (error) {
-                console.error('Error fetching monitor status:', error);
-                document.getElementById('monitor-status').innerHTML = '<p>Error fetching status data. Please try again later.</p>';
-            }
-        }
-
-        // Call the function on page load
-        window.onload = fetchMonitorStatus;
-    </script>
+    <title>System Status</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 2em; background-color: #f8f9fa; color: #212529; }
+        h1, h2 { color: #343a40; }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1em; }
+        .service { background-color: #fff; border: 1px solid #dee2e6; padding: 1.5em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .service h3 { margin-top: 0; }
+        .up { color: #28a745; font-weight: bold; }
+        .down { color: #dc3545; font-weight: bold; }
+        img { max-width: 100%; height: auto; border-radius: 4px; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My GitHub Pages Site</h1>
-    <p>This is a test page hosted on GitHub Pages!</p>
-    <img src="sparkline.png" alt="Server Status Sparkline">
-
-    <h1>Monitor Status</h1>
-    <div id="monitor-status">
-        <!-- Dynamic content will be inserted here -->
-        <p>Loading status...</p>
+    <h1>System Status</h1>
+<h2>Last Checked: 2026-01-06 17:01:42 UTC</h2><div class="service-grid">
+    <div class="service">
+        <h3>google.com</h3>
+        <p><strong>Status:</strong> <span class="up">Up</span></p>
+        <img src="sparkline_google_com.png" alt="google.com Uptime Sparkline">
     </div>
-    <p>Below is the server status over the last 7 days:</p>
-    <img src="sparkline.png" alt="Server Status Sparkline">
 
-
-<h1>Welcome to My GitHub Pages Site</h1>
-<p>This is a test page hosted on GitHub Pages!</p>
-<img src="sparkline.png" alt="Server Status Sparkline">
-
-
-<h1>Monitor Status</h1>
-coming soon
-<p>Below is the server status over the last 7 days:</p>
-<img src="sparkline.png" alt="Server Status Sparkline">
-
+    <div class="service">
+        <h3>github.com</h3>
+        <p><strong>Status:</strong> <span class="up">Up</span></p>
+        <img src="sparkline_github_com.png" alt="github.com Uptime Sparkline">
+    </div>
+</div>
 </body>
 </html>
