@@ -2,31 +2,21 @@
   {
     "resource": "google.com",
     "status": "Up",
-    "timestamp": "2026-01-06T18:20:50.289876"
+    "timestamp": "2026-01-06T18:53:25.254031+00:00"
   },
   {
     "resource": "8.8.8.8",
     "status": "Up",
-    "timestamp": "2026-01-06T18:20:50.295425"
+    "timestamp": "2026-01-06T18:53:25.258748+00:00"
   },
   {
     "resource": "github.com",
     "status": "Up",
-    "timestamp": "2026-01-06T18:20:50.332132"
+    "timestamp": "2026-01-06T18:53:25.309742+00:00"
   },
   {
-    "resource": "google.com",
-    "status": "Up",
-    "timestamp": "2026-01-06T18:21:14.685891"
-  },
-  {
-    "resource": "8.8.8.8",
-    "status": "Up",
-    "timestamp": "2026-01-06T18:21:14.691834"
-  },
-  {
-    "resource": "github.com",
-    "status": "Up",
-    "timestamp": "2026-01-06T18:21:14.724682"
+    "resource": "test.com",
+    "status": "Down",
+    "timestamp": "2026-01-06T18:53:25.314905+00:00"
   }
 ]
