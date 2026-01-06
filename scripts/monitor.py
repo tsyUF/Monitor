@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import json
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 
 # Setup logging
 logging.basicConfig(
@@ -49,10 +49,10 @@ def load_historical_data(file_path):
 def save_and_prune_data(data, file_path, days_to_keep):
     """Appends new data, prunes old entries, and saves to a JSON file."""
     # Prune entries older than the specified number of days
-    cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
+    cutoff_date = datetime.now(UTC) - timedelta(days=days_to_keep)
     pruned_data = [
         entry for entry in data
-        if datetime.fromisoformat(entry['timestamp'].replace('Z', '+00:00')) > cutoff_date.replace(tzinfo=None)
+        if datetime.fromisoformat(entry['timestamp']).replace(tzinfo=UTC) > cutoff_date
     ]
 
     # Ensure the directory exists
@@ -96,7 +96,7 @@ def main():
         current_results.append({
             "resource": target_host,
             "status": status,
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now(UTC).isoformat()
         })
 
     # Combine and save data
@@ -104,15 +104,19 @@ def main():
     pruned_data = save_and_prune_data(combined_data, RESULTS_FILE, HISTORY_DAYS)
 
     # Generate outputs
-    generate_sparklines(pruned_data)
-    generate_html_report(pruned_data)
+    generate_sparklines(pruned_data, targets)
+    generate_html_report(pruned_data, targets)
 
 
 # --- Output Generation ---
-def generate_html_report(all_data):
+def generate_html_report(all_data, current_targets):
     """Generates a static HTML report from the latest monitoring data."""
-    # Get the latest status for each resource
-    latest_status = {item['resource']: item for item in all_data}
+    # Create a map of the latest status for each resource for efficient lookup
+    latest_status_map = {}
+    # Sort data by timestamp descending to find the most recent entry for each resource
+    for entry in sorted(all_data, key=lambda x: x['timestamp'], reverse=True):
+        if entry['resource'] not in latest_status_map:
+            latest_status_map[entry['resource']] = entry
 
     # Function to sanitize resource names for filenames
     def sanitize_resource_name(name):
@@ -134,6 +138,7 @@ def generate_html_report(all_data):
         .service h3 { margin-top: 0; }
         .up { color: #28a745; font-weight: bold; }
         .down { color: #dc3545; font-weight: bold; }
+        .unknown { color: #6c757d; font-weight: bold; }
         img { max-width: 100%; height: auto; border-radius: 4px; margin-top: 1em; }
     </style>
 </head>
@@ -142,17 +147,29 @@ def generate_html_report(all_data):
 """
     last_checked = "N/A"
     if all_data:
-        last_checked_ts = max(datetime.fromisoformat(d['timestamp']) for d in all_data)
-        last_checked = last_checked_ts.strftime('%Y-%m-%d %H:%M:%S UTC')
+        try:
+            # Find the timestamp of the most recent check
+            latest_timestamp = max(datetime.fromisoformat(d['timestamp']) for d in all_data)
+            last_checked = latest_timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')
+        except (ValueError, TypeError):
+             last_checked = "Error parsing date"
+    else:
+        last_checked = datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S UTC')
 
     html += f"<h2>Last Checked: {last_checked}</h2>"
     html += '<div class="service-grid">'
 
-    for resource, data in sorted(latest_status.items()):
-        status = data['status']
+    # Iterate over the configured targets to ensure all are displayed
+    for resource in sorted(current_targets):
+        latest_data = latest_status_map.get(resource)
+
+        status = "Unknown"
+        if latest_data:
+            status = latest_data.get('status', 'Unknown')
+
         sanitized_name = sanitize_resource_name(resource)
         sparkline_path = f"sparkline_{sanitized_name}.png"
-        status_class = "up" if status == "Up" else "down"
+        status_class = status.lower()
 
         html += f"""
     <div class="service">
@@ -172,35 +189,43 @@ def generate_html_report(all_data):
         logging.error(f"Could not write HTML report: {e}")
 
 
-def generate_sparklines(all_data):
+def generate_sparklines(all_data, current_targets):
     """Generates sparkline images for each resource based on historical data."""
     if not all_data:
         logging.warning("No data available to generate sparklines.")
-        return
+        # Still create blank sparklines for new services
+        all_data = []
 
-    df = pd.DataFrame(all_data)
-    df['timestamp'] = pd.to_datetime(df['timestamp'])
+    df = pd.DataFrame(all_data) if all_data else pd.DataFrame(columns=['resource', 'timestamp', 'status'])
+    if 'timestamp' in df.columns:
+        df['timestamp'] = pd.to_datetime(df['timestamp'], format='ISO8601', utc=True)
     df['value'] = df['status'].map({'Up': 1, 'Down': 0})
 
-    for resource_name, group in df.groupby('resource'):
+    for resource_name in current_targets:
         try:
-            # Sanitize resource name for filename
+            group = df[df['resource'] == resource_name]
             sanitized_name = "".join(c if c.isalnum() else '_' for c in resource_name)
             sparkline_path = f"docs/sparkline_{sanitized_name}.png"
 
             # Resample data to create a consistent time series
-            series = group.set_index('timestamp')['value']
-            resampled = series.resample('6h').mean().ffill().fillna(0) # Resample every 6 hours and fill gaps
+            series = group.set_index('timestamp')['value'] if not group.empty else pd.Series(dtype=float)
+
+            # Ensure we cover the last 30 days, even if data is sparse
+            end_date = datetime.now(UTC)
+            start_date = end_date - timedelta(days=HISTORY_DAYS)
+            full_range = pd.date_range(start=start_date, end=end_date, freq='6h')
+
+            series = series.reindex(full_range, method='ffill').fillna(0)
             
-            if resampled.empty:
+            if series.empty:
                 logging.warning(f"No data to plot for {resource_name}. Creating a flat line.")
-                plot_data = [0, 0] # Default to 'Down' if no data
+                plot_data = [0] * 120 # Default to 'Down' if no data for 30 days (30*4 points)
             else:
-                plot_data = resampled.tolist()
+                plot_data = series.tolist()
 
             # Plotting
             plt.figure(figsize=(4, 0.75))
-            color = 'tab:green' if plot_data[-1] > 0.5 else 'tab:red'
+            color = 'tab:green' if plot_data and plot_data[-1] > 0.5 else 'tab:red'
             plt.plot(plot_data, color=color, linewidth=2)
             plt.ylim(-0.1, 1.1)
             plt.axis('off')
