@@ -1,4 +1,6 @@
-google.com
 uff.lightning.force.com
-github.com
 ph12258.us-east-2.aws.snowflakecomputing.com
+https://ufadvancement.quickbase.com/
+my.ufl.edu
+google.com
+github.com
