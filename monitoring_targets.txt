@@ -1,7 +1,7 @@
+uff.lightning.force.com
+ph12258.us-east-2.aws.snowflakecomputing.com
+ufadvancement.quickbase.com
+my.ufl.edu
 google.com
 github.com
-cloudflare.com
-facebook.com
-amazon.com
-apple.com
-microsoft.com
+test.com
