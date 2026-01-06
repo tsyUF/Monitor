@@ -1,3 +1,4 @@
 google.com
-8.8.8.8
+uff.lightning.force.com
 github.com
+ph12258.us-east-2.aws.snowflakecomputing.com
