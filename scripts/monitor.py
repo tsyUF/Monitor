@@ -133,7 +133,21 @@ def generate_html_report(all_data, current_targets):
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 2em; background-color: #f8f9fa; color: #212529; }
         h1, h2 { color: #343a40; }
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1em; }
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5em;
+        }
+        @media (max-width: 992px) {
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
         .service { background-color: #fff; border: 1px solid #dee2e6; padding: 1.5em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .service h3 { margin-top: 0; }
         .up { color: #28a745; font-weight: bold; }

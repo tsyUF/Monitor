@@ -8,7 +8,21 @@
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 2em; background-color: #f8f9fa; color: #212529; }
         h1, h2 { color: #343a40; }
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1em; }
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5em;
+        }
+        @media (max-width: 992px) {
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
         .service { background-color: #fff; border: 1px solid #dee2e6; padding: 1.5em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .service h3 { margin-top: 0; }
         .up { color: #28a745; font-weight: bold; }
@@ -19,11 +33,29 @@
 </head>
 <body>
     <h1>System Status</h1>
-<h2>Last Checked: 2026-01-06 18:53:25 UTC</h2><div class="service-grid">
+<h2>Last Checked: 2026-01-06 19:18:51 UTC</h2><div class="service-grid">
     <div class="service">
-        <h3>8.8.8.8</h3>
+        <h3>amazon.com</h3>
+        <p><strong>Status:</strong> <span class="down">Down</span></p>
+        <img src="sparkline_amazon_com.png" alt="amazon.com Uptime Sparkline">
+    </div>
+
+    <div class="service">
+        <h3>apple.com</h3>
         <p><strong>Status:</strong> <span class="up">Up</span></p>
-        <img src="sparkline_8_8_8_8.png" alt="8.8.8.8 Uptime Sparkline">
+        <img src="sparkline_apple_com.png" alt="apple.com Uptime Sparkline">
+    </div>
+
+    <div class="service">
+        <h3>cloudflare.com</h3>
+        <p><strong>Status:</strong> <span class="up">Up</span></p>
+        <img src="sparkline_cloudflare_com.png" alt="cloudflare.com Uptime Sparkline">
+    </div>
+
+    <div class="service">
+        <h3>facebook.com</h3>
+        <p><strong>Status:</strong> <span class="up">Up</span></p>
+        <img src="sparkline_facebook_com.png" alt="facebook.com Uptime Sparkline">
     </div>
 
     <div class="service">
@@ -39,8 +71,8 @@
     </div>
 
     <div class="service">
-        <h3>test.com</h3>
+        <h3>microsoft.com</h3>
         <p><strong>Status:</strong> <span class="down">Down</span></p>
-        <img src="sparkline_test_com.png" alt="test.com Uptime Sparkline">
+        <img src="sparkline_microsoft_com.png" alt="microsoft.com Uptime Sparkline">
     </div>
 </div></body></html>

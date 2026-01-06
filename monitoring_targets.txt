@@ -1,4 +1,7 @@
 google.com
-8.8.8.8
 github.com
-test.com
+cloudflare.com
+facebook.com
+amazon.com
+apple.com
+microsoft.com
