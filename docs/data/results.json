@@ -1,0 +1,32 @@
+[
+  {
+    "resource": "google.com",
+    "status": "Up",
+    "timestamp": "2026-01-06T18:20:50.289876"
+  },
+  {
+    "resource": "8.8.8.8",
+    "status": "Up",
+    "timestamp": "2026-01-06T18:20:50.295425"
+  },
+  {
+    "resource": "github.com",
+    "status": "Up",
+    "timestamp": "2026-01-06T18:20:50.332132"
+  },
+  {
+    "resource": "google.com",
+    "status": "Up",
+    "timestamp": "2026-01-06T18:21:14.685891"
+  },
+  {
+    "resource": "8.8.8.8",
+    "status": "Up",
+    "timestamp": "2026-01-06T18:21:14.691834"
+  },
+  {
+    "resource": "github.com",
+    "status": "Up",
+    "timestamp": "2026-01-06T18:21:14.724682"
+  }
+]
