@@ -26,11 +26,10 @@ jobs:
           PING_TARGETS: "google.com,8.8.8.8,github.com"
         run: python scripts/monitor.py
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: "Update monitoring results [skip ci]"
+      - name: Commit and push results
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add docs/
+          git commit -m "Update monitoring results [skip ci]" || echo "No changes to commit"
+          git push origin gh-pages
