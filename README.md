@@ -1,101 +1,107 @@
 # Multi-Target Monitoring System
 
-This project implements a multi-target monitoring system that pings a list of specified hosts (IP addresses or URLs) to check their availability. It uses Python for the monitoring logic and Quarto to generate an HTML status report. The system is designed to be run via GitHub Actions, which automates the monitoring and report generation process.
+<<<<<<< HEAD
+This project implements a multi-target monitoring system that pings a list of specified hosts (IP addresses or URLs) to check their availability. It uses a Python script to perform the monitoring, store historical uptime data, and generate a static HTML status page. The system is designed to be run via GitHub Actions, which automates the monitoring and deployment.
+=======
+This project implements a multi-target monitoring system that pings a list of specified hosts (IP addresses or URLs) to check their availability. It uses a Python script to perform the monitoring, store historical uptime data, and generate a static HTML status page. The system is designed to be run via GitHub Actions, which automates the monitoring and deployment to GitHub Pages.
+>>>>>>> origin/main
 
 ## Features
 
 *   Monitors multiple IP addresses and/or URLs via ICMP ping.
-*   Generates individual status sparkline images for each monitored target.
-*   Outputs detailed monitoring results to a JSON file (`data/results.json`).
-*   Updates a general operational status JSON file (`docs/status.json`).
+*   Stores up to 30 days of historical uptime data in a JSON file.
+*   Generates individual status sparkline images for each target, visualizing its uptime over the last 30 days.
+<<<<<<< HEAD
+*   Generates a clean, self-contained `docs/index.html` report with a static footer.
 *   Integrates with GitHub Actions for scheduled and manual monitoring runs.
-*   Presents results in a Quarto-generated HTML report (`docs/monitoring_report.html`).
-*   Provides a main dashboard landing page (`docs/index.html`).
+*   Configuration of monitored targets, including custom display names, is managed through a simple text file.
 
 ## How it Works
 
-1.  **Trigger**: Monitoring is triggered by GitHub Actions workflows defined in `.github/workflows/run-monitor.yml` (for manual runs targeting `gh-pages`) and `.github/workflows/monitoring.yml` (can be scheduled, targets the main branch).
-2.  **Monitoring Script**: The workflow executes the Python script `scripts/monitor.py`.
-3.  **Target Configuration**: The script reads a list of targets from the `PING_TARGETS` environment variable, which is set within the GitHub Actions workflow.
+1.  **Trigger**: Monitoring is triggered by a GitHub Actions workflow defined in `.github/workflows/run-monitor.yml`. This runs automatically on any push to the `main` branch, on an hourly schedule, or can be triggered manually.
+=======
+*   Generates a clean, self-contained `docs/index.html` report.
+*   Integrates with GitHub Actions for scheduled and manual monitoring runs.
+*   Configuration of monitored targets is managed through a simple text file.
+
+## How it Works
+
+1.  **Trigger**: Monitoring is triggered by a GitHub Actions workflow defined in `.github/workflows/run-monitor.yml`. This can be run manually or on a schedule.
+>>>>>>> origin/main
+2.  **Target Configuration**: The script reads a list of targets from the `monitoring_targets.txt` file in the root of the repository.
+3.  **Monitoring Script**: The workflow executes the Python script `scripts/monitor.py`.
 4.  **Data Collection**: `scripts/monitor.py` pings each target, records its status ("Up" or "Down") and timestamp.
-5.  **Output Generation**:
-    *   The collected data is saved to `data/results.json`.
-    *   Individual sparkline images (`docs/sparkline_<target_name>.png`) are generated for each target, visualizing its recent uptime.
-    *   A general status file `docs/status.json` is updated.
-6.  **Reporting**:
-    *   The GitHub Actions workflow (typically `.github/workflows/monitoring.yml` if it includes a Quarto render step, or a separate workflow might handle rendering) renders the Quarto document `.github/workflows/monitor.qmd` into an HTML report, saved as `docs/monitoring_report.html`.
-    *   `index.qmd` is rendered to `docs/index.html` and serves as the main landing page, linking to the detailed report.
-7.  **Deployment**: Changes, including the JSON data, sparklines, and HTML report, are committed back to the repository and deployed to GitHub Pages (if configured, e.g., from the `docs` folder of the `gh-pages` branch or the main branch).
+5.  **Data Storage**: The script loads existing historical data from `docs/data/results.json`, appends the new results, and prunes any data older than 30 days.
+6.  **Output Generation**:
+<<<<<<< HEAD
+    *   Individual sparkline images (`docs/sparkline_*.png`) are generated for each target, visualizing its uptime over the last 30 days.
+    *   A static `docs/index.html` file is generated, displaying the latest status and the historical sparkline for each target. A static footer with a link to the Salesforce status page is also included.
+7.  **Deployment**: The GitHub Actions workflow uses the `stefanzweifel/git-auto-commit-action` to automatically commit the updated contents of the `docs` directory directly back to the `main` branch.
 
 ## Configuration
 
-Targets for monitoring are defined by setting the `PING_TARGETS` environment variable within the GitHub Actions workflow files.
+To add or change a target, simply edit the `monitoring_targets.txt` file and commit the change to the `main` branch. The monitoring workflow will automatically run and update the status page.
 
-*   **File(s) to Edit**: `.github/workflows/run-monitor.yml` and/or `.github/workflows/monitoring.yml`
-*   **Variable Name**: `PING_TARGETS`
-*   **Format**: A comma-separated string of IP addresses or hostnames.
+### Format
+You can specify targets in two ways:
+1.  **Simple URL**: Just the URL or IP address on a line. The URL itself will be used as the display name on the report.
+2.  **Custom Display Name**: Use the format `DisplayName=URL`. This allows you to set a custom, human-readable name for each target on the report.
 
-**Example `PING_TARGETS` in a workflow file:**
-```yaml
-env:
-  PING_TARGETS: "google.com,8.8.8.8,github.com,nonexistentdomain.dev"
+**Example `monitoring_targets.txt` with Custom Display Names:**
+```
+Salesforce=uff.lightning.force.com
+Snowflake=UFL-ADVANCEMENT.snowflakecomputing.com
+Quickbase=ufadvancement.quickbase.com
+myUFL=my.ufl.edu
+Google=google.com
+=======
+    *   Individual sparkline images (`docs/sparkline_<target_name>.png`) are generated for each target, visualizing its uptime over the last 30 days.
+    *   A static `docs/index.html` file is generated, displaying the latest status and the historical sparkline for each target.
+7.  **Deployment**: The GitHub Actions workflow uses the `peaceiris/actions-gh-pages` action to automatically deploy the entire contents of the `docs` directory to the `gh-pages` branch, publishing the updated report.
+
+## Configuration
+
+Targets for monitoring are defined in the `monitoring_targets.txt` file.
+
+*   **File to Edit**: `monitoring_targets.txt`
+*   **Format**: A list of IP addresses or hostnames, one per line.
+
+**Example `monitoring_targets.txt`:**
+```
+google.com
+8.8.8.8
+github.com
+>>>>>>> origin/main
 ```
 
 ## Output Files
 
 The primary outputs of the monitoring process are:
 
-*   **`docs/index.html`**: The main dashboard landing page, providing an overview and a link to the detailed report.
-*   **`docs/monitoring_report.html`**: The detailed HTML report generated by Quarto, showing status summaries and individual sparklines for all targets.
-*   **`data/results.json`**: Contains the raw monitoring data for each target, including resource name, status (Up/Down), and timestamp of the check.
-*   **`docs/sparkline_*.png`**: A set of PNG images, where each image is a sparkline visualizing the recent uptime history for a specific target (e.g., `docs/sparkline_google_com.png`).
-*   **`docs/status.json`**: A simple JSON file indicating the overall server status and the last update time (this is a general status, not per target).
+*   **`docs/index.html`**: The main dashboard and status report.
+*   **`docs/data/results.json`**: Contains the raw monitoring data for the last 30 days.
+*   **`docs/sparkline_*.png`**: A set of PNG images, where each image is a sparkline visualizing the recent uptime history for a specific target.
 
 ## Running Locally (for Development/Testing)
 
 To run the monitoring script locally:
 
-1.  **Clone the repository**:
-    ```bash
-    git clone <repository-url> # Replace <repository-url> with the actual URL
-    cd Monitor # Or your repository name
-    ```
-2.  **Set up Python environment**:
-    Ensure you have Python 3 installed. It's recommended to use a virtual environment.
-    ```bash
-    python3 -m venv .venv
-    source .venv/bin/activate # On Linux/macOS
-    # On Windows (Git Bash or WSL): source .venv/bin/activate
-    # On Windows (Command Prompt): .venv\Scripts\activate.bat
-    # On Windows (PowerShell): .venv\Scripts\Activate.ps1
-    ```
+1.  **Clone the repository**.
+2.  **Set up a Python environment**.
 3.  **Install dependencies**:
-    The script `scripts/monitor.py` requires `pandas` and `matplotlib`.
     ```bash
-    pip install pandas matplotlib
+    pip install -r requirements.txt
     ```
-4.  **Set the environment variable**:
-    ```bash
-    export PING_TARGETS="google.com,8.8.8.8" # For Linux/macOS
-    # For Windows (Command Prompt): set PING_TARGETS="google.com,8.8.8.8"
-    # For Windows (PowerShell): $env:PING_TARGETS="google.com,8.8.8.8"
-    ```
-5.  **Run the script**:
+4.  **Run the script**:
     ```bash
     python scripts/monitor.py
     ```
-    This will generate `data/results.json` and sparkline images in `docs/`.
-
-    *Note: To generate the HTML report locally, you would also need to install Quarto and render the `.github/workflows/monitor.qmd` file, adjusting paths as necessary.*
+    This will generate the `index.html` report, sparkline images, and update the historical data file in the `docs` directory.
 
 ## Viewing the Dashboard
 
-The monitoring dashboard can be viewed by opening `docs/index.html` in a web browser. If deployed via GitHub Pages, it will be available at `https://<your-username>.github.io/<repository-name>/` (replace placeholders).
-
-## Contributing
-
-Contributions are welcome! If you have suggestions for improvements or find any issues, please feel free to open an issue or submit a pull request.
-
-## License
-
-This project is open-source. Please refer to the `LICENSE` file for more details. (It is recommended to add a `LICENSE` file, e.g., MIT License, if one does not exist.)
+<<<<<<< HEAD
+The monitoring dashboard can be viewed by opening `docs/index.html` in a web browser. When deployed, it is available at the repository's GitHub Pages URL.
+=======
+The monitoring dashboard can be viewed by opening `docs/index.html` in a web browser. When deployed via GitHub Pages, it will be available at your GitHub Pages URL.
+>>>>>>> origin/main

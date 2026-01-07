@@ -1,9 +1,0 @@
-project:
-  type: website
-  output-dir: docs
-
-website:
-  title: "My Monitoring Dashboard"
-  navbar:
-    left:
-      - href: index.qmd
