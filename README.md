@@ -4,7 +4,7 @@
 This project implements a multi-target monitoring system that pings a list of specified hosts (IP addresses or URLs) to check their availability. It uses a Python script to perform the monitoring, store historical uptime data, and generate a static HTML status page. The system is designed to be run via GitHub Actions, which automates the monitoring and deployment.
 =======
 This project implements a multi-target monitoring system that pings a list of specified hosts (IP addresses or URLs) to check their availability. It uses a Python script to perform the monitoring, store historical uptime data, and generate a static HTML status page. The system is designed to be run via GitHub Actions, which automates the monitoring and deployment to GitHub Pages.
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
 
 ## Features
 
@@ -27,7 +27,7 @@ This project implements a multi-target monitoring system that pings a list of sp
 ## How it Works
 
 1.  **Trigger**: Monitoring is triggered by a GitHub Actions workflow defined in `.github/workflows/run-monitor.yml`. This can be run manually or on a schedule.
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
 2.  **Target Configuration**: The script reads a list of targets from the `monitoring_targets.txt` file in the root of the repository.
 3.  **Monitoring Script**: The workflow executes the Python script `scripts/monitor.py`.
 4.  **Data Collection**: `scripts/monitor.py` pings each target, records its status ("Up" or "Down") and timestamp.
@@ -71,7 +71,7 @@ Targets for monitoring are defined in the `monitoring_targets.txt` file.
 google.com
 8.8.8.8
 github.com
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
 ```
 
 ## Output Files
@@ -104,4 +104,4 @@ To run the monitoring script locally:
 The monitoring dashboard can be viewed by opening `docs/index.html` in a web browser. When deployed, it is available at the repository's GitHub Pages URL.
 =======
 The monitoring dashboard can be viewed by opening `docs/index.html` in a web browser. When deployed via GitHub Pages, it will be available at your GitHub Pages URL.
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e

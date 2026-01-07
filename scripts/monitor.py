@@ -84,7 +84,7 @@ def save_and_prune_data(data, file_path, days_to_keep):
     return pruned_data
 
 
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
 # --- Core Logic ---
 def main():
     """Main function to run the monitoring process."""
@@ -94,7 +94,7 @@ def main():
 
 =======
 
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
     # Setup ping command based on platform
     param = "-n" if platform.system().lower() == "windows" else "-c"
 
@@ -117,7 +117,7 @@ def main():
 
 =======
 
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
         current_results.append({
             "resource": target_host,
             "status": status,
@@ -173,7 +173,7 @@ def generate_html_report(all_data, current_targets):
     def sanitize_resource_name(name):
         return "".join(c if c.isalnum() else '_' for c in name)
 
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
     # Build HTML content
     html = """
 <!DOCTYPE html>
@@ -195,7 +195,7 @@ def generate_html_report(all_data, current_targets):
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5em;
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
         }
         @media (max-width: 992px) {
             .service-grid {
@@ -255,7 +255,7 @@ def generate_html_report(all_data, current_targets):
         sparkline_path = f"sparkline_{sanitized_name}.png"
         status_class = status.lower()
 
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
         html += f"""
     <div class="service">
         <h3>{resource}</h3>
@@ -284,7 +284,7 @@ def generate_sparklines(all_data, current_targets):
 
 =======
 
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
     df = pd.DataFrame(all_data) if all_data else pd.DataFrame(columns=['resource', 'timestamp', 'status'])
     if 'timestamp' in df.columns:
         df['timestamp'] = pd.to_datetime(df['timestamp'], format='ISO8601', utc=True)
@@ -316,7 +316,7 @@ def generate_sparklines(all_data, current_targets):
 
             series = series.reindex(full_range, method='ffill').fillna(0)
             
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
             if series.empty:
                 logging.warning(f"No data to plot for {resource_name}. Creating a flat line.")
                 plot_data = [0] * 120 # Default to 'Down' if no data for 30 days (30*4 points)

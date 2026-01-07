@@ -16,7 +16,7 @@ jobs:
       contents: write
 =======
       contents: write
->>>>>>> origin/main
+>>>>>>> bf4ad99b941758068256d035718ca2aed57d4f8e
 
     steps:
       - name: Checkout repository
