@@ -343,5 +343,35 @@
     "resource": "github.com",
     "status": "Down",
     "timestamp": "2026-01-07T17:24:50.992796+00:00"
+  },
+  {
+    "resource": "uff.lightning.force.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T18:28:21.235908+00:00"
+  },
+  {
+    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T18:28:31.247315+00:00"
+  },
+  {
+    "resource": "ufadvancement.quickbase.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T18:28:41.256113+00:00"
+  },
+  {
+    "resource": "my.ufl.edu",
+    "status": "Down",
+    "timestamp": "2026-01-07T18:28:51.263710+00:00"
+  },
+  {
+    "resource": "google.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T18:29:01.268138+00:00"
+  },
+  {
+    "resource": "github.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T18:29:11.272103+00:00"
   }
 ]
