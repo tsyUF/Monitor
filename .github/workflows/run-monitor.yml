@@ -10,6 +10,7 @@ on:
 
 jobs:
   run-monitor:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -24,7 +25,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install pandas matplotlib
+        run: pip install -r requirements.txt
 
       - name: Clean previous artifacts
         run: |
@@ -39,3 +40,5 @@ jobs:
         with:
           commit_message: "Update monitoring results [skip ci]"
           file_pattern: docs/**
+	
+
