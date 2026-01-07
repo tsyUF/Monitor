@@ -12,14 +12,14 @@ jobs:
   run-monitor:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Grants write permissions to repository contents
+      contents: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -34,21 +34,8 @@ jobs:
       - name: Run monitor script
         run: python scripts/monitor.py
 
-      - name: List files in docs directory
-        run: ls -R docs
-
-      - name: Upload monitor log
-        uses: actions/upload-artifact@v4
+      - name: Commit monitoring results
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          name: monitor-log
-          path: monitor.log
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: "Update monitoring results [skip ci]"
-          force_orphan: true
+          file_pattern: docs/**
