@@ -433,5 +433,35 @@
     "resource": "github.com",
     "status": "Down",
     "timestamp": "2026-01-07T20:22:39.213254+00:00"
+  },
+  {
+    "resource": "Salesforce=uff.lightning.force.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T20:33:18.819672+00:00"
+  },
+  {
+    "resource": "Snowflake=UFL-ADVANCEMENT.snowflakecomputing.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T20:33:18.822066+00:00"
+  },
+  {
+    "resource": "Quickbase=ufadvancement.quickbase.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T20:33:18.824388+00:00"
+  },
+  {
+    "resource": "myUFL=my.ufl.edu",
+    "status": "Down",
+    "timestamp": "2026-01-07T20:33:18.826674+00:00"
+  },
+  {
+    "resource": "Google=google.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T20:33:18.828976+00:00"
+  },
+  {
+    "resource": "GitHub=github.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T20:33:18.831254+00:00"
   }
 ]
