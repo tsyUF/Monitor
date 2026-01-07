@@ -4,7 +4,7 @@
     "status": "Up",
     "timestamp": "2026-01-06T18:53:25.254031+00:00"
   },
-   {
+  {
     "resource": "github.com",
     "status": "Up",
     "timestamp": "2026-01-06T18:53:25.309742+00:00"
@@ -568,5 +568,45 @@
     "resource": "github.com",
     "status": "Up",
     "timestamp": "2026-01-07T20:57:15.935593+00:00"
+  },
+  {
+    "resource": "uff.lightning.force.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:03:03.607364+00:00"
+  },
+  {
+    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:03:13.617094+00:00"
+  },
+  {
+    "resource": "ufadvancement.quickbase.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:03:23.628448+00:00"
+  },
+  {
+    "resource": "my.ufl.edu",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:03:33.639813+00:00"
+  },
+  {
+    "resource": "uflorida-my.sharepoint.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:03:43.651123+00:00"
+  },
+  {
+    "resource": "outlook.office365.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:03:53.656104+00:00"
+  },
+  {
+    "resource": "google.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:04:03.661252+00:00"
+  },
+  {
+    "resource": "github.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:04:13.665466+00:00"
   }
 ]
