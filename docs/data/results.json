@@ -4,20 +4,10 @@
     "status": "Up",
     "timestamp": "2026-01-06T18:53:25.254031+00:00"
   },
-  {
-    "resource": "8.8.8.8",
-    "status": "Up",
-    "timestamp": "2026-01-06T18:53:25.258748+00:00"
-  },
-  {
+   {
     "resource": "github.com",
     "status": "Up",
     "timestamp": "2026-01-06T18:53:25.309742+00:00"
-  },
-  {
-    "resource": "test.com",
-    "status": "Down",
-    "timestamp": "2026-01-06T18:53:25.314905+00:00"
   },
   {
     "resource": "google.com",
@@ -30,31 +20,6 @@
     "timestamp": "2026-01-06T19:18:31.239667+00:00"
   },
   {
-    "resource": "cloudflare.com",
-    "status": "Up",
-    "timestamp": "2026-01-06T19:18:31.280420+00:00"
-  },
-  {
-    "resource": "facebook.com",
-    "status": "Up",
-    "timestamp": "2026-01-06T19:18:31.323033+00:00"
-  },
-  {
-    "resource": "amazon.com",
-    "status": "Down",
-    "timestamp": "2026-01-06T19:18:41.332110+00:00"
-  },
-  {
-    "resource": "apple.com",
-    "status": "Up",
-    "timestamp": "2026-01-06T19:18:41.367451+00:00"
-  },
-  {
-    "resource": "microsoft.com",
-    "status": "Down",
-    "timestamp": "2026-01-06T19:18:51.375810+00:00"
-  },
-  {
     "resource": "google.com",
     "status": "Up",
     "timestamp": "2026-01-06T20:09:18.521427+00:00"
@@ -65,37 +30,7 @@
     "timestamp": "2026-01-06T20:09:18.559001+00:00"
   },
   {
-    "resource": "cloudflare.com",
-    "status": "Up",
-    "timestamp": "2026-01-06T20:09:18.596557+00:00"
-  },
-  {
-    "resource": "facebook.com",
-    "status": "Up",
-    "timestamp": "2026-01-06T20:09:18.646219+00:00"
-  },
-  {
-    "resource": "amazon.com",
-    "status": "Down",
-    "timestamp": "2026-01-06T20:09:28.654841+00:00"
-  },
-  {
-    "resource": "apple.com",
-    "status": "Up",
-    "timestamp": "2026-01-06T20:09:28.683832+00:00"
-  },
-  {
-    "resource": "microsoft.com",
-    "status": "Down",
-    "timestamp": "2026-01-06T20:09:38.691839+00:00"
-  },
-  {
-    "resource": "uff.lightning.force.com",
-    "status": "Down",
-    "timestamp": "2026-01-06T21:09:37.393646+00:00"
-  },
-  {
-    "resource": "ph12258.us-east-2.aws.snowflakecomputing.com",
+    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
     "status": "Down",
     "timestamp": "2026-01-06T21:09:47.405630+00:00"
   },
@@ -118,11 +53,6 @@
     "resource": "github.com",
     "status": "Up",
     "timestamp": "2026-01-06T21:09:47.629340+00:00"
-  },
-  {
-    "resource": "uff.lightning.force.com",
-    "status": "Down",
-    "timestamp": "2026-01-07T14:53:05.133490+00:00"
   },
   {
     "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
@@ -148,11 +78,6 @@
     "resource": "github.com",
     "status": "Down",
     "timestamp": "2026-01-07T14:53:55.179219+00:00"
-  },
-  {
-    "resource": "uff.lightning.force.com",
-    "status": "Down",
-    "timestamp": "2026-01-07T14:58:33.880860+00:00"
   },
   {
     "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
@@ -611,37 +536,37 @@
   },
   {
     "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
-    "status": "Down",
+    "status": "Up",
     "timestamp": "2026-01-07T20:56:15.904870+00:00"
   },
   {
     "resource": "ufadvancement.quickbase.com",
-    "status": "Down",
+    "status": "Up",
     "timestamp": "2026-01-07T20:56:25.909650+00:00"
   },
   {
     "resource": "my.ufl.edu",
-    "status": "Down",
+    "status": "Up",
     "timestamp": "2026-01-07T20:56:35.916877+00:00"
   },
   {
     "resource": "uflorida-my.sharepoint.com",
-    "status": "Down",
+    "status": "Up",
     "timestamp": "2026-01-07T20:56:45.922346+00:00"
   },
   {
     "resource": "outlook.office365.com",
-    "status": "Down",
+    "status": "Up",
     "timestamp": "2026-01-07T20:56:55.926883+00:00"
   },
   {
     "resource": "google.com",
-    "status": "Down",
+    "status": "Up",
     "timestamp": "2026-01-07T20:57:05.931230+00:00"
   },
   {
     "resource": "github.com",
-    "status": "Down",
+    "status": "Up",
     "timestamp": "2026-01-07T20:57:15.935593+00:00"
   }
 ]
