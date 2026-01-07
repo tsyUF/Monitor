@@ -608,5 +608,45 @@
     "resource": "github.com",
     "status": "Down",
     "timestamp": "2026-01-07T21:04:13.665466+00:00"
+  },
+  {
+    "resource": "www.uff.ufl.edu",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:05:14.152217+00:00"
+  },
+  {
+    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:05:24.163523+00:00"
+  },
+  {
+    "resource": "ufadvancement.quickbase.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:05:34.174760+00:00"
+  },
+  {
+    "resource": "my.ufl.edu",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:05:44.186072+00:00"
+  },
+  {
+    "resource": "uflorida-my.sharepoint.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:05:54.196011+00:00"
+  },
+  {
+    "resource": "outlook.office365.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:06:04.200426+00:00"
+  },
+  {
+    "resource": "google.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:06:14.208737+00:00"
+  },
+  {
+    "resource": "github.com",
+    "status": "Down",
+    "timestamp": "2026-01-07T21:06:24.214274+00:00"
   }
 ]
