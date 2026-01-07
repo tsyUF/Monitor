@@ -13,60 +13,58 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5em;
         }
-        @media (max-width: 992px) {
-            .service-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (max-width: 768px) {
-            .service-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 992px) { .service-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .service-grid { grid-template-columns: 1fr; } }
         .service { background-color: #fff; border: 1px solid #dee2e6; padding: 1.5em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .service h3 { margin-top: 0; }
         .up { color: #28a745; font-weight: bold; }
         .down { color: #dc3545; font-weight: bold; }
         .unknown { color: #6c757d; font-weight: bold; }
         img { max-width: 100%; height: auto; border-radius: 4px; margin-top: 1em; }
+        .footer { margin-top: 2em; padding-top: 1em; border-top: 1px solid #dee2e6; }
     </style>
 </head>
 <body>
     <h1>System Status</h1>
-<h2>Last Checked: 2026-01-07 20:33:59 UTC</h2><div class="service-grid">
+<h2>Last Checked: 2026-01-07 20:36:45 UTC</h2><div class="service-grid">
     <div class="service">
-        <h3>GitHub=github.com</h3>
+        <h3>GitHub</h3>
         <p><strong>Status:</strong> <span class="down">Down</span></p>
-        <img src="sparkline_GitHub_github_com.png" alt="GitHub=github.com Uptime Sparkline">
+        <img src="sparkline_github_com.png" alt="GitHub Uptime Sparkline">
     </div>
 
     <div class="service">
-        <h3>Google=google.com</h3>
+        <h3>Google</h3>
         <p><strong>Status:</strong> <span class="down">Down</span></p>
-        <img src="sparkline_Google_google_com.png" alt="Google=google.com Uptime Sparkline">
+        <img src="sparkline_google_com.png" alt="Google Uptime Sparkline">
     </div>
 
     <div class="service">
-        <h3>Quickbase=ufadvancement.quickbase.com</h3>
+        <h3>Quickbase</h3>
         <p><strong>Status:</strong> <span class="down">Down</span></p>
-        <img src="sparkline_Quickbase_ufadvancement_quickbase_com.png" alt="Quickbase=ufadvancement.quickbase.com Uptime Sparkline">
+        <img src="sparkline_ufadvancement_quickbase_com.png" alt="Quickbase Uptime Sparkline">
     </div>
 
     <div class="service">
-        <h3>Salesforce=uff.lightning.force.com</h3>
+        <h3>Salesforce</h3>
         <p><strong>Status:</strong> <span class="down">Down</span></p>
-        <img src="sparkline_Salesforce_uff_lightning_force_com.png" alt="Salesforce=uff.lightning.force.com Uptime Sparkline">
+        <img src="sparkline_uff_lightning_force_com.png" alt="Salesforce Uptime Sparkline">
     </div>
 
     <div class="service">
-        <h3>Snowflake=UFL-ADVANCEMENT.snowflakecomputing.com</h3>
+        <h3>Snowflake</h3>
         <p><strong>Status:</strong> <span class="down">Down</span></p>
-        <img src="sparkline_Snowflake_UFL_ADVANCEMENT_snowflakecomputing_com.png" alt="Snowflake=UFL-ADVANCEMENT.snowflakecomputing.com Uptime Sparkline">
+        <img src="sparkline_UFL_ADVANCEMENT_snowflakecomputing_com.png" alt="Snowflake Uptime Sparkline">
     </div>
 
     <div class="service">
-        <h3>myUFL=my.ufl.edu</h3>
+        <h3>myUFL</h3>
         <p><strong>Status:</strong> <span class="down">Down</span></p>
-        <img src="sparkline_myUFL_my_ufl_edu.png" alt="myUFL=my.ufl.edu Uptime Sparkline">
+        <img src="sparkline_my_ufl_edu.png" alt="myUFL Uptime Sparkline">
     </div>
-</div></body></html>
+</div>
+    <div class="footer">
+        <h3>Salesforce</h3>
+        <a href="https://status.salesforce.com/alias/UFF/history/" target="_blank">Salesforce up status</a>
+    </div>
+</body></html>
