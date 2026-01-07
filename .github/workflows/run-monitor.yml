@@ -1,35 +1,41 @@
 name: Run Monitor Script
 
 on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 * * * *' # Run every hour
   workflow_dispatch: # Allows manual runs
 
 jobs:
   run-monitor:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Grants write permissions to repository contents
+      contents: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
       - name: Install dependencies
         run: pip install pandas matplotlib
 
+      - name: Clean previous artifacts
+        run: |
+          rm -f docs/index.html
+          rm -f docs/sparkline_*.png
+
       - name: Run monitor script
-        env:
-          PING_TARGETS: "google.com,8.8.8.8,github.com"
         run: python scripts/monitor.py
 
-      - name: Commit and push results
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add docs/results.json docs/status.json docs/sparkline_*.png
-          git add . && (git diff --staged --quiet || git commit -m "Update monitoring results [skip ci]")
-          git push origin gh-pages
+      - name: Commit monitoring results
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update monitoring results [skip ci]"
+          file_pattern: docs/**
