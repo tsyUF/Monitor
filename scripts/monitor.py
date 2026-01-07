@@ -109,10 +109,62 @@ def main():
     combined_data = historical_data + current_results
     pruned_data = save_and_prune_data(combined_data, RESULTS_FILE, HISTORY_DAYS)
 
-    generate_sparklines(pruned_data, target_urls)
+    generate_chart(pruned_data, target_urls)
     generate_html_report(pruned_data, targets)
 
 # --- Output Generation ---
+def generate_chart(all_data, target_urls):
+    """Generates a bar chart for each resource url based on historical data."""
+    if not all_data:
+        logging.warning("No data available to generate charts.")
+        return
+
+    df = pd.DataFrame(all_data)
+    df['timestamp'] = pd.to_datetime(df['timestamp'])
+    df['date'] = df['timestamp'].dt.date
+    df['status_val'] = df['status'].apply(lambda x: 1 if x == 'Up' else 0)
+
+    for resource_url in target_urls:
+        try:
+            resource_df = df[df['resource'] == resource_url]
+            sanitized_name = "".join(c if c.isalnum() else '_' for c in resource_url)
+            chart_path = f"docs/chart_{sanitized_name}.png"
+
+            if resource_df.empty:
+                logging.warning(f"No data for {resource_url}, skipping chart generation.")
+                continue
+
+            # Group by date and calculate daily uptime percentage
+            daily_uptime = resource_df.groupby('date')['status_val'].mean().fillna(0) * 100
+
+            # Create a full 30-day date range
+            end_date = datetime.now(UTC).date()
+            start_date = end_date - timedelta(days=HISTORY_DAYS - 1)
+            full_range = pd.to_datetime(pd.date_range(start=start_date, end=end_date, freq='D')).date
+            daily_uptime = daily_uptime.reindex(full_range, fill_value=0)
+
+            fig, ax = plt.subplots(figsize=(6, 2))
+            colors = ['#dc3545' if x < 100 else '#28a745' for x in daily_uptime.values]
+            ax.bar(daily_uptime.index, daily_uptime.values, color=colors, width=0.8)
+
+            ax.set_title(f'Uptime for {resource_url} (Last 30 Days)', fontsize=10)
+            ax.set_ylabel('Uptime %', fontsize=8)
+            ax.set_ylim(0, 100)
+            ax.tick_params(axis='x', rotation=45, labelsize=6)
+            ax.tick_params(axis='y', labelsize=8)
+
+            # Format x-axis to show date without year
+            ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b %d'))
+
+            plt.tight_layout()
+            plt.savefig(chart_path, dpi=150)
+            plt.close(fig)
+            logging.info(f"Generated chart for {resource_url} at {chart_path}")
+
+        except Exception as e:
+            logging.error(f"Failed to generate chart for {resource_url}: {e}", exc_info=True)
+
+
 def generate_html_report(all_data, current_targets):
     """Generates a static HTML report from the latest monitoring data."""
     latest_status_map = {}
@@ -169,14 +221,14 @@ def generate_html_report(all_data, current_targets):
         latest_data = latest_status_map.get(resource_url)
         status = latest_data.get('status', 'Unknown') if latest_data else "Unknown"
         sanitized_name = sanitize_resource_name(resource_url)
-        sparkline_path = f"sparkline_{sanitized_name}.png"
+        chart_path = f"chart_{sanitized_name}.png"
         status_class = status.lower()
 
         html += f"""
     <div class="service">
         <h3>{display_name}</h3>
         <p><strong>Status:</strong> <span class="{status_class}">{status}</span></p>
-        <img src="{sparkline_path}" alt="{display_name} Uptime Sparkline">
+        <img src="{chart_path}" alt="{display_name} Uptime Chart">
     </div>
 """
     html += '</div>'
@@ -197,47 +249,6 @@ def generate_html_report(all_data, current_targets):
         logging.info("Successfully generated HTML report at docs/index.html")
     except IOError as e:
         logging.error(f"Could not write HTML report: {e}")
-
-def generate_sparklines(all_data, target_urls):
-    """Generates sparkline images for each resource url based on historical data."""
-    if not all_data:
-        logging.warning("No data available to generate sparklines.")
-        all_data = []
-
-    df = pd.DataFrame(all_data) if all_data else pd.DataFrame(columns=['resource', 'timestamp', 'status'])
-    if 'timestamp' in df.columns:
-        df['timestamp'] = pd.to_datetime(df['timestamp'], format='ISO8601', utc=True)
-    df['value'] = df['status'].map({'Up': 1, 'Down': 0})
-
-    for resource_url in target_urls:
-        try:
-            group = df[df['resource'] == resource_url]
-            sanitized_name = "".join(c if c.isalnum() else '_' for c in resource_url)
-            sparkline_path = f"docs/sparkline_{sanitized_name}.png"
-
-            series = group.set_index('timestamp')['value'] if not group.empty else pd.Series(dtype=float)
-            
-            end_date = datetime.now(UTC)
-            start_date = end_date - timedelta(days=HISTORY_DAYS)
-            full_range = pd.date_range(start=start_date, end=end_date, freq='6h')
-
-            series = series.reindex(full_range, method='ffill').fillna(0)
-            
-            plot_data = series.tolist() if not series.empty else [0] * 120
-
-            plt.figure(figsize=(4, 0.75))
-            color = 'tab:green' if plot_data and plot_data[-1] > 0.5 else 'tab:red'
-            plt.plot(plot_data, color=color, linewidth=2)
-            plt.ylim(-0.1, 1.1)
-            plt.axis('off')
-            plt.tight_layout(pad=0)
-            
-            plt.savefig(sparkline_path, dpi=100)
-            plt.close()
-            logging.info(f"Generated sparkline for {resource_url} at {sparkline_path}")
-
-        except Exception as e:
-            logging.error(f"Failed to generate sparkline for {resource_url}: {e}", exc_info=True)
 
 if __name__ == "__main__":
     main()
