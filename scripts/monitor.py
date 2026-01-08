@@ -1,3 +1,4 @@
+
 import platform
 import os
 import shutil
@@ -220,7 +221,7 @@ def generate_html_report(all_data, current_targets):
     html += f"<h2>Last Checked: {last_checked}</h2>"
     html += '<div class="service-grid">'
 
-    for display_name, resource_url in sorted(current_targets):
+    for display_name, resource_url in current_targets:
         latest_data = latest_status_map.get(resource_url)
         status = latest_data.get('status', 'Unknown') if latest_data else "Unknown"
         sanitized_name = sanitize_resource_name(resource_url)
