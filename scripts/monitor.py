@@ -175,6 +175,12 @@ def generate_chart(all_data, target_urls):
             ax.set_xticks(tick_indices)
             ax.set_xticklabels([date_range[i].strftime('%b %d') for i in tick_indices], rotation=45, ha="right")
 
+            # Add grid lines to create separation between blocks
+            ax.set_xticks(np.arange(-.5, len(date_range), 1), minor=True)
+            ax.set_yticks(np.arange(-.5, 24, 1), minor=True)
+            ax.grid(which="minor", color="w", linestyle='-', linewidth=2)
+            ax.tick_params(which="minor", size=0)
+
             # Invert y-axis to have hour 0 at the top
             ax.invert_yaxis()
 
