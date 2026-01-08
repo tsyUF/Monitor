@@ -1,11 +1,11 @@
 import platform
-import subprocess
 import os
 import shutil
 import pandas as pd
 import matplotlib.pyplot as plt
 import json
 import logging
+import requests
 from datetime import datetime, timedelta, UTC
 
 # Setup logging
@@ -81,24 +81,27 @@ def main():
     targets = read_targets(TARGETS_FILE)
     historical_data = load_historical_data(RESULTS_FILE)
 
-    param = "-n" if platform.system().lower() == "windows" else "-c"
     current_results = []
-
     target_urls = [url for _, url in targets]
 
     for target_host in target_urls:
-        logging.info(f"Pinging {target_host}...")
-        command = ["ping", param, "1", target_host]
+        logging.info(f"Checking {target_host}...")
         status = "Down"
         try:
-            result = subprocess.run(command, capture_output=True, text=True, timeout=10)
-            if result.returncode == 0:
-                status = "Up"
-                logging.info(f"Ping to {target_host} SUCCEEDED.")
+            # Add "https://" if no scheme is present
+            if not target_host.startswith(('http://', 'https://')):
+                url_to_check = f"https://{target_host}"
             else:
-                logging.warning(f"Ping to {target_host} FAILED.")
-        except Exception as e:
-            logging.error(f"Ping to {target_host} failed with an exception: {e}")
+                url_to_check = target_host
+
+            response = requests.get(url_to_check, timeout=10)
+            if response.status_code >= 200 and response.status_code < 300:
+                status = "Up"
+                logging.info(f"Check for {target_host} SUCCEEDED with status code {response.status_code}.")
+            else:
+                logging.warning(f"Check for {target_host} FAILED with status code {response.status_code}.")
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Check for {target_host} failed with an exception: {e}")
 
         current_results.append({
             "resource": target_host,

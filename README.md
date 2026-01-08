@@ -1,10 +1,10 @@
 # Multi-Target Monitoring System
 
-This project implements a multi-target monitoring system that pings a list of specified hosts (IP addresses or URLs) to check their availability. It uses a Python script to perform the monitoring, store historical uptime data, and generate a static HTML status page. The system is designed to be run via GitHub Actions, which automates the monitoring and deployment.
+This project implements a multi-target monitoring system that checks a list of specified hosts (IP addresses or URLs) to check their availability. It uses a Python script to perform the monitoring, store historical uptime data, and generate a static HTML status page. The system is designed to be run via GitHub Actions, which automates the monitoring and deployment.
 
 ## Features
 
-*   Monitors multiple IP addresses and/or URLs via ICMP ping.
+*   Monitors multiple IP addresses and/or URLs via HTTPS requests.
 *   Stores up to 30 days of historical uptime data in a JSON file.
 *   Generates individual status bar chart images for each target, visualizing its uptime over the last 30 days.
 *   Generates a clean, self-contained `docs/index.html` report with a static footer.
@@ -16,7 +16,7 @@ This project implements a multi-target monitoring system that pings a list of sp
 1.  **Trigger**: Monitoring is triggered by a GitHub Actions workflow defined in `.github/workflows/run-monitor.yml`. This runs automatically on any push to the `main` branch, on an hourly schedule, or can be triggered manually.
 2.  **Target Configuration**: The script reads a list of targets from the `monitoring_targets.txt` file in the root of the repository.
 3.  **Monitoring Script**: The workflow executes the Python script `scripts/monitor.py`.
-4.  **Data Collection**: `scripts/monitor.py` pings each target, records its status ("Up" or "Down") and timestamp.
+4.  **Data Collection**: `scripts/monitor.py` sends an HTTPS request to each target, records its status ("Up" or "Down") and timestamp.
 5.  **Data Storage**: The script loads existing historical data from `docs/data/results.json`, appends the new results, and prunes any data older than 30 days.
 6.  **Output Generation**:
     *   Individual bar chart images (`docs/chart_*.png`) are generated for each target, visualizing its uptime over the last 30 days.
