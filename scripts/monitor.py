@@ -1,5 +1,4 @@
 import platform
-import subprocess
 import os
 import shutil
 import pandas as pd
@@ -82,14 +81,11 @@ def main():
     targets = read_targets(TARGETS_FILE)
     historical_data = load_historical_data(RESULTS_FILE)
 
-																	
     current_results = []
-
     target_urls = [url for _, url in targets]
 
     for target_host in target_urls:
         logging.info(f"Checking {target_host}...")
-												   
         status = "Down"
         try:
             # Add "https://" if no scheme is present
@@ -112,7 +108,6 @@ def main():
             "status": status,
             "timestamp": datetime.now(UTC).isoformat()
         })
-
 
     combined_data = historical_data + current_results
     pruned_data = save_and_prune_data(combined_data, RESULTS_FILE, HISTORY_DAYS)
