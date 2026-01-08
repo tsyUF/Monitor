@@ -124,7 +124,7 @@ def generate_chart(all_data, target_urls):
         return
 
     df = pd.DataFrame(all_data)
-    df['timestamp'] = pd.to_datetime(df['timestamp'])
+    df['timestamp'] = pd.to_datetime(df['timestamp'], format='ISO8601')
     df['date'] = df['timestamp'].dt.date
     df['status_val'] = df['status'].apply(lambda x: 1 if x == 'Up' else 0)
 
@@ -158,8 +158,13 @@ def generate_chart(all_data, target_urls):
             ax.tick_params(axis='y', labelsize=8)
 
             # Format x-axis to show date without year
+            # Format x-axis to show date without year and set ticks
             ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b %d'))
             ax.set_xlim(start_date - timedelta(hours=12), end_date + timedelta(hours=12))
+
+            # Set explicit ticks to ensure start and end dates are shown
+            tick_dates = pd.date_range(start=start_date, end=end_date, periods=5).to_pydatetime()
+            ax.set_xticks(tick_dates)
 
             plt.tight_layout()
             plt.savefig(chart_path, dpi=150)
