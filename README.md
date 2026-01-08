@@ -25,7 +25,7 @@ This project implements a multi-target monitoring system that checks a list of s
 
 ## Configuration
 
-To add or change a target, simply edit the `monitoring_targets.txt` file and commit the change to the `main` branch. The monitoring workflow will automatically run and update the status page.
+To add or change a target, simply edit the `monitoring_targets.txt` file and commit the change to the `main` branch. The order of the services on the status page is determined by the order of the lines in this file. The monitoring workflow will automatically run and update the status page.
 
 ### Format
 You can specify targets in two ways:
