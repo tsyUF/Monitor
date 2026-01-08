@@ -159,7 +159,7 @@ def generate_chart(all_data, target_urls):
 
             # Format x-axis to show date without year
             ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b %d'))
-            ax.set_xlim(start_date, end_date)
+            ax.set_xlim(start_date - timedelta(days=1), end_date + timedelta(days=1))
 
             plt.tight_layout()
             plt.savefig(chart_path, dpi=150)
