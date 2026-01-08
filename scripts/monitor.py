@@ -138,8 +138,8 @@ def generate_chart(all_data, target_urls):
                 logging.warning(f"No data for {resource_url}, skipping chart generation.")
                 continue
 
-            # Group by date and calculate daily uptime percentage
-            daily_uptime = resource_df.groupby('date')['status_val'].mean().fillna(0) * 100
+            # Group by date and calculate daily uptime in hours
+            daily_uptime = resource_df.groupby('date')['status_val'].sum().fillna(0)
 
             # Create a full 30-day date range
             end_date = datetime.now(UTC).date()
@@ -148,17 +148,18 @@ def generate_chart(all_data, target_urls):
             daily_uptime = daily_uptime.reindex(full_range, fill_value=0)
 
             fig, ax = plt.subplots(figsize=(6, 2))
-            colors = ['#dc3545' if x < 100 else '#28a745' for x in daily_uptime.values]
+            colors = ['#dc3545' if x < 24 else '#28a745' for x in daily_uptime.values]
             ax.bar(daily_uptime.index, daily_uptime.values, color=colors, width=0.8)
 
             ax.set_title(f'Uptime for {resource_url} (Last 30 Days)', fontsize=10)
-            ax.set_ylabel('Uptime %', fontsize=8)
-            ax.set_ylim(0, 100)
+            ax.set_ylabel('Uptime (Hours)', fontsize=8)
+            ax.set_ylim(0, 24)
             ax.tick_params(axis='x', rotation=45, labelsize=6)
             ax.tick_params(axis='y', labelsize=8)
 
             # Format x-axis to show date without year
             ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b %d'))
+            ax.set_xlim(start_date, end_date)
 
             plt.tight_layout()
             plt.savefig(chart_path, dpi=150)
