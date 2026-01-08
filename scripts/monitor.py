@@ -118,14 +118,18 @@ def main():
 
 # --- Output Generation ---
 def generate_chart(all_data, target_urls):
-    """Generates a bar chart for each resource url based on historical data."""
+    """Generates a heatmap-style grid chart for each resource's hourly uptime."""
     if not all_data:
         logging.warning("No data available to generate charts.")
         return
 
+    from matplotlib.colors import ListedColormap
+    import numpy as np
+
     df = pd.DataFrame(all_data)
     df['timestamp'] = pd.to_datetime(df['timestamp'], format='ISO8601')
     df['date'] = df['timestamp'].dt.date
+    df['hour'] = df['timestamp'].dt.hour
     df['status_val'] = df['status'].apply(lambda x: 1 if x == 'Up' else 0)
 
     for resource_url in target_urls:
@@ -138,41 +142,49 @@ def generate_chart(all_data, target_urls):
                 logging.warning(f"No data for {resource_url}, skipping chart generation.")
                 continue
 
-            # Group by date and calculate daily uptime in hours
-            daily_uptime = resource_df.groupby('date')['status_val'].sum().fillna(0)
-
-            # Create a full 30-day date range
+            # --- Data Preparation for Grid ---
             end_date = datetime.now(UTC).date()
             start_date = end_date - timedelta(days=HISTORY_DAYS - 1)
-            full_range = pd.to_datetime(pd.date_range(start=start_date, end=end_date, freq='D')).date
-            daily_uptime = daily_uptime.reindex(full_range, fill_value=0)
+            date_range = pd.date_range(start=start_date, end=end_date, freq='D').date
 
-            fig, ax = plt.subplots(figsize=(6, 2))
-            colors = ['#dc3545' if x < 24 else '#28a745' for x in daily_uptime.values]
-            ax.bar(daily_uptime.index, daily_uptime.values, color=colors, width=0.8)
+            # Pivot data to create a 24x30 grid, taking the last status per hour
+            hourly_status = resource_df.sort_values('timestamp').drop_duplicates(['date', 'hour'], keep='last')
+            grid_df = hourly_status.pivot_table(index='hour', columns='date', values='status_val')
 
-            ax.set_title(f'Uptime for {resource_url} (Last 30 Days)', fontsize=10)
-            ax.set_ylabel('Uptime (Hours)', fontsize=8)
-            ax.set_ylim(0, 24)
-            ax.tick_params(axis='x', rotation=45, labelsize=6)
-            ax.tick_params(axis='y', labelsize=8)
+            # Reindex to ensure all hours (0-23) and all days in the range are present
+            grid_df = grid_df.reindex(index=range(24), columns=date_range, fill_value=0) # 0 for 'Down'/no data
 
-            # Format x-axis to show date without year
-            # Format x-axis to show date without year and set ticks
-            ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b %d'))
-            ax.set_xlim(start_date - timedelta(hours=12), end_date + timedelta(hours=12))
+            # --- Plotting ---
+            fig, ax = plt.subplots(figsize=(10, 5))
+            cmap = ListedColormap(['#dc3545', '#28a745']) # Red for 0, Green for 1
 
-            # Set explicit ticks to ensure start and end dates are shown
-            tick_dates = pd.date_range(start=start_date, end=end_date, periods=5).to_pydatetime()
-            ax.set_xticks(tick_dates)
+            ax.imshow(grid_df, cmap=cmap, aspect='auto', interpolation='nearest')
+
+            # --- Axes and Labels ---
+            ax.set_title(f'Hourly Uptime: {resource_url} (Last 30 Days)', fontsize=12)
+
+            # Y-axis (Hours)
+            ax.set_ylabel('Hour of Day (UTC)', fontsize=10)
+            ax.set_yticks(range(0, 24, 4))
+            ax.set_yticklabels([f'{h:02d}:00' for h in range(0, 24, 4)])
+
+            # X-axis (Dates)
+            ax.set_xlabel('Date', fontsize=10)
+            # Display ticks for every 5 days for clarity
+            tick_indices = np.arange(0, len(date_range), 5)
+            ax.set_xticks(tick_indices)
+            ax.set_xticklabels([date_range[i].strftime('%b %d') for i in tick_indices], rotation=45, ha="right")
+
+            # Invert y-axis to have hour 0 at the top
+            ax.invert_yaxis()
 
             plt.tight_layout()
             plt.savefig(chart_path, dpi=150)
             plt.close(fig)
-            logging.info(f"Generated chart for {resource_url} at {chart_path}")
+            logging.info(f"Generated heatmap chart for {resource_url} at {chart_path}")
 
         except Exception as e:
-            logging.error(f"Failed to generate chart for {resource_url}: {e}", exc_info=True)
+            logging.error(f"Failed to generate heatmap chart for {resource_url}: {e}", exc_info=True)
 
 
 def generate_html_report(all_data, current_targets):
