@@ -231,7 +231,10 @@ def generate_html_report(all_data, current_targets):
         .down { color: #dc3545; font-weight: bold; }
         .unknown { color: #6c757d; font-weight: bold; }
         img { max-width: 100%; height: auto; border-radius: 4px; margin-top: 1em; }
-        .footer { margin-top: 2em; padding-top: 1em; border-top: 1px solid #dee2e6; }
+        .footer {  margin-top: 2em;  padding-top: 1em;  border-top: 1px solid #dee2e6;  display: flex;  justify-content: space-between;  align-items: center;}
+        .footer-cell {  flex: 1;}
+        .footer-cell:first-child {  text-align: left;}
+        .footer-cell:last-child {  text-align: right;}
     </style>
 </head>
 <body>
@@ -268,13 +271,16 @@ def generate_html_report(all_data, current_targets):
 
     # Add the static footer
     html += """
-    <div class="footer">
+<div class="footer">
+    <div class="footer-cell">
         <h3>Salesforce</h3>
         <a href="https://status.salesforce.com/alias/UFF/history/" target="_blank">Salesforce up status</a>
-
-        <h3>SnowStat</h3>
-        <a href="https://status.snowflake.com/"" target="_blank">Snowflake up status</a>
     </div>
+    <div class="footer-cell">
+        <h3>SnowStat</h3>
+        <a href="https://status.snowflake.com/" target="_blank">Snowflake up status</a>
+    </div>
+</div>
 """
 
     html += '</body></html>'
