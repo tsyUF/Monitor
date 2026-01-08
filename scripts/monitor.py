@@ -6,9 +6,12 @@ import matplotlib.pyplot as plt
 import json
 import logging
 import requests
-from datetime import datetime, timedelta, UTC
+from datetime import datetime, timedelta
+import pytz
 
 # Setup logging
+EASTERN_TZ = pytz.timezone('US/Eastern')
+
 logging.basicConfig(
     filename='monitor.log',
     level=logging.INFO,
@@ -61,10 +64,10 @@ def load_historical_data(file_path):
 
 def save_and_prune_data(data, file_path, days_to_keep):
     """Appends new data, prunes old entries, and saves to a JSON file."""
-    cutoff_date = datetime.now(UTC) - timedelta(days=days_to_keep)
+    cutoff_date = datetime.now(EASTERN_TZ) - timedelta(days=days_to_keep)
     pruned_data = [
         entry for entry in data
-        if datetime.fromisoformat(entry['timestamp']).replace(tzinfo=UTC) > cutoff_date
+        if datetime.fromisoformat(entry['timestamp']) > cutoff_date
     ]
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     try:
@@ -106,7 +109,7 @@ def main():
         current_results.append({
             "resource": target_host,
             "status": status,
-            "timestamp": datetime.now(UTC).isoformat()
+            "timestamp": datetime.now(EASTERN_TZ).isoformat()
         })
 
     combined_data = historical_data + current_results
@@ -126,7 +129,7 @@ def generate_chart(all_data, target_urls):
     import numpy as np
 
     df = pd.DataFrame(all_data)
-    df['timestamp'] = pd.to_datetime(df['timestamp'], format='ISO8601')
+    df['timestamp'] = pd.to_datetime(df['timestamp'], format='ISO8601', utc=True).dt.tz_convert('US/Eastern')
     df['date'] = df['timestamp'].dt.date
     df['hour'] = df['timestamp'].dt.hour
     # Map status to numerical values for plotting: 2 for Up, 1 for Down. Missing data will be 0.
@@ -144,7 +147,7 @@ def generate_chart(all_data, target_urls):
                 continue
 
             # --- Data Preparation for Grid ---
-            end_date = datetime.now(UTC).date()
+            end_date = datetime.now(EASTERN_TZ).date()
             start_date = end_date - timedelta(days=HISTORY_DAYS - 1)
             date_range = pd.date_range(start=start_date, end=end_date, freq='D').date
 
@@ -166,7 +169,7 @@ def generate_chart(all_data, target_urls):
             ax.set_title(f'Hourly Uptime: {resource_url} (Last 30 Days)', fontsize=12)
 
             # Y-axis (Hours)
-            ax.set_ylabel('Hour of Day (UTC)', fontsize=10)
+            ax.set_ylabel('Hour of Day (ET)', fontsize=10)
             ax.set_yticks(range(0, 24, 4))
             ax.set_yticklabels([f'{h:02d}:00' for h in range(0, 24, 4)])
 
@@ -238,11 +241,11 @@ def generate_html_report(all_data, current_targets):
     if all_data:
         try:
             latest_timestamp = max(datetime.fromisoformat(d['timestamp']) for d in all_data)
-            last_checked = latest_timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')
+            last_checked = latest_timestamp.astimezone(EASTERN_TZ).strftime('%Y-%m-%d %H:%M:%S ET')
         except (ValueError, TypeError):
              last_checked = "Error parsing date"
     else:
-        last_checked = datetime.now(UTC).strftime('%Y-%m-%d %H:%M:%S UTC')
+        last_checked = datetime.now(EASTERN_TZ).strftime('%Y-%m-%d %H:%M:%S ET')
 
     html += f"<h2>Last Checked: {last_checked}</h2>"
     html += '<div class="service-grid">'
