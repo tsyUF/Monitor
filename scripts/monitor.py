@@ -130,7 +130,9 @@ def generate_chart(all_data, target_urls):
     df['timestamp'] = pd.to_datetime(df['timestamp'], format='ISO8601')
     df['date'] = df['timestamp'].dt.date
     df['hour'] = df['timestamp'].dt.hour
-    df['status_val'] = df['status'].apply(lambda x: 1 if x == 'Up' else 0)
+    # Map status to numerical values for plotting: 2 for Up, 1 for Down. Missing data will be 0.
+    status_map = {'Up': 2, 'Down': 1}
+    df['status_val'] = df['status'].map(status_map)
 
     for resource_url in target_urls:
         try:
@@ -152,13 +154,14 @@ def generate_chart(all_data, target_urls):
             grid_df = hourly_status.pivot_table(index='hour', columns='date', values='status_val')
 
             # Reindex to ensure all hours (0-23) and all days in the range are present
-            grid_df = grid_df.reindex(index=range(24), columns=date_range, fill_value=0) # 0 for 'Down'/no data
+            grid_df = grid_df.reindex(index=range(24), columns=date_range, fill_value=0) # 0 for missing data
 
             # --- Plotting ---
             fig, ax = plt.subplots(figsize=(10, 5))
-            cmap = ListedColormap(['#dc3545', '#28a745']) # Red for 0, Green for 1
+            # White for missing (0), Red for Down (1), Green for Up (2)
+            cmap = ListedColormap(['#ffffff', '#dc3545', '#28a745'])
 
-            ax.imshow(grid_df, cmap=cmap, aspect='auto', interpolation='nearest')
+            ax.imshow(grid_df, cmap=cmap, aspect='auto', interpolation='nearest', vmin=0, vmax=2)
 
             # --- Axes and Labels ---
             ax.set_title(f'Hourly Uptime: {resource_url} (Last 30 Days)', fontsize=12)
