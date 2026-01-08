@@ -271,8 +271,7 @@ def generate_html_report(all_data, current_targets):
     <div class="footer">
         <h3>Salesforce</h3>
         <a href="https://status.salesforce.com/alias/UFF/history/" target="_blank">Salesforce up status</a>
-    </div>
-<div class="footer">
+
         <h3>SnowStat</h3>
         <a href="https://status.snowflake.com/"" target="_blank">Snowflake up status</a>
     </div>
