@@ -126,6 +126,7 @@ def generate_chart(all_data, target_urls):
         return
 
     from matplotlib.colors import ListedColormap
+    import matplotlib.patches as mpatches
     import numpy as np
 
     df = pd.DataFrame(all_data)
@@ -160,10 +161,18 @@ def generate_chart(all_data, target_urls):
 
             # --- Plotting ---
             fig, ax = plt.subplots(figsize=(10, 5))
-            # White for missing (0), Red for Down (1), Green for Up (2)
-            cmap = ListedColormap(['#ffffff', '#dc3545', '#28a745'])
+            # Grey for missing (0), Red for Down (1), Green for Up (2)
+            cmap = ListedColormap(['#cccccc', '#dc3545', '#28a745'])
 
             ax.imshow(grid_df, cmap=cmap, aspect='auto', interpolation='nearest', vmin=0, vmax=2)
+
+            # --- Legend ---
+            patches = [
+                mpatches.Patch(color='#28a745', label='Up'),
+                mpatches.Patch(color='#dc3545', label='Down'),
+                mpatches.Patch(color='#cccccc', label='Missing')
+            ]
+            ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
             # --- Axes and Labels ---
             ax.set_title(f'Hourly Uptime: {resource_url} (Last 30 Days)', fontsize=12)
@@ -189,8 +198,8 @@ def generate_chart(all_data, target_urls):
             # Invert y-axis to have hour 0 at the top
             ax.invert_yaxis()
 
-            plt.tight_layout()
-            plt.savefig(chart_path, dpi=150)
+            plt.tight_layout(rect=[0, 0, 0.85, 1]) # Adjust layout to make space for legend
+            plt.savefig(chart_path, dpi=150, bbox_inches='tight')
             plt.close(fig)
             logging.info(f"Generated heatmap chart for {resource_url} at {chart_path}")
 
