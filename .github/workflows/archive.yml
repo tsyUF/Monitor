@@ -1,0 +1,32 @@
+name: Archive Old Data
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+  workflow_dispatch: # Allows manual runs
+
+jobs:
+  archive-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run archive script
+        run: python scripts/archive.py
+
+      - name: Commit archived data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Archive old monitoring data [skip ci]"
