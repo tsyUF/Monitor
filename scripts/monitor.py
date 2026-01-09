@@ -180,7 +180,7 @@ def generate_chart(all_data, target_urls):
             # --- Plotting ---
             fig, ax = plt.subplots(figsize=(10, 5))
             # Grey for missing (0), Red for Down (1), Green for Up (2). White for future (NaN).
-            cmap = ListedColormap(['#333333', '#0021A5', '#FA4616'])
+            cmap = ListedColormap(['#808080', '#0021A5', '#FA4616'])
             cmap.set_bad(color='white') # Use white for NaN values (the future)
 
             ax.imshow(grid_df, cmap=cmap, aspect='auto', interpolation='nearest', vmin=0, vmax=2)
@@ -189,7 +189,7 @@ def generate_chart(all_data, target_urls):
             patches = [
                 mpatches.Patch(color='#FA4616', label='Up'),
                 mpatches.Patch(color='#0021A5', label='Down'),
-                mpatches.Patch(color='#333333', label='Missing'),
+                mpatches.Patch(color='#808080', label='Missing'),
                 mpatches.Patch(color='white', label='Future', edgecolor='black')
             ]
             ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
