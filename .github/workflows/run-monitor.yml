@@ -29,7 +29,7 @@ jobs:
       - name: Clean previous artifacts
         run: |
           rm -f docs/index.html
-          rm -f docs/sparkline_*.png
+          rm -f docs/chart_*.png
 
       - name: Run monitor script
         run: python scripts/monitor.py
