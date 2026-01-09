@@ -189,8 +189,8 @@ def generate_chart(all_data, target_urls):
             patches = [
                 mpatches.Patch(color='#28a745', label='Up'),
                 mpatches.Patch(color='#dc3545', label='Down'),
-                mpatches.Patch(color='#cccccc', label='Missing'),
-                mpatches.Patch(color='white', label='Future', edgecolor='black')
+                mpatches.Patch(color='#cccccc', label='Missing')
+           #     ,mpatches.Patch(color='white', label='Future', edgecolor='black')
             ]
             ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
