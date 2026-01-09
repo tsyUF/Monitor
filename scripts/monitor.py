@@ -150,19 +150,38 @@ def generate_chart(all_data, target_urls):
             # --- Data Preparation for Grid ---
             end_date = datetime.now(EASTERN_TZ).date()
             start_date = end_date - timedelta(days=HISTORY_DAYS - 1)
-            date_range = pd.date_range(start=start_date, end=end_date, freq='D').date
 
-            # Pivot data to create a 24x30 grid, taking the last status per hour
+            # Create a complete hourly timeline scaffold
+            now_et = datetime.now(EASTERN_TZ)
+            start_ts = pd.Timestamp(start_date, tz='US/Eastern')
+            end_ts = pd.Timestamp(end_date, tz='US/Eastern').replace(hour=23)
+            hourly_range = pd.date_range(start=start_ts, end=end_ts, freq='h')
+            scaffold_df = pd.DataFrame({'timestamp': hourly_range})
+            scaffold_df['date'] = scaffold_df['timestamp'].dt.date
+            scaffold_df['hour'] = scaffold_df['timestamp'].dt.hour
+
+            # Get the last known status for each hour from the actual data
             hourly_status = resource_df.sort_values('timestamp').drop_duplicates(['date', 'hour'], keep='last')
-            grid_df = hourly_status.pivot_table(index='hour', columns='date', values='status_val')
 
-            # Reindex to ensure all hours (0-23) and all days in the range are present
-            grid_df = grid_df.reindex(index=range(24), columns=date_range, fill_value=0) # 0 for missing data
+            # Merge the scaffold with the actual data. This introduces NaNs for all missing hours.
+            merged_df = pd.merge(scaffold_df, hourly_status[['date', 'hour', 'status_val']], on=['date', 'hour'], how='left')
+
+            # Differentiate between past and future missing data
+            # Fill past missing hours with 0 (Missing). Future hours remain NaN.
+            merged_df.loc[merged_df['timestamp'] < now_et, 'status_val'] = merged_df.loc[merged_df['timestamp'] < now_et, 'status_val'].fillna(0)
+
+            # Pivot to create the grid
+            grid_df = merged_df.pivot_table(index='hour', columns='date', values='status_val')
+
+            # Reindex to ensure column order and preserve NaNs for the future
+            date_range = pd.date_range(start=start_date, end=end_date, freq='D').date
+            grid_df = grid_df.reindex(index=range(24), columns=date_range)
 
             # --- Plotting ---
             fig, ax = plt.subplots(figsize=(10, 5))
-            # Grey for missing (0), Red for Down (1), Green for Up (2)
+            # Grey for missing (0), Red for Down (1), Green for Up (2). White for future (NaN).
             cmap = ListedColormap(['#cccccc', '#dc3545', '#28a745'])
+            cmap.set_bad(color='white') # Use white for NaN values (the future)
 
             ax.imshow(grid_df, cmap=cmap, aspect='auto', interpolation='nearest', vmin=0, vmax=2)
 
@@ -170,7 +189,8 @@ def generate_chart(all_data, target_urls):
             patches = [
                 mpatches.Patch(color='#28a745', label='Up'),
                 mpatches.Patch(color='#dc3545', label='Down'),
-                mpatches.Patch(color='#cccccc', label='Missing')
+                mpatches.Patch(color='#cccccc', label='Missing'),
+                mpatches.Patch(color='white', label='Future', edgecolor='black')
             ]
             ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
