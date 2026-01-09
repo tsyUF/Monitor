@@ -180,16 +180,16 @@ def generate_chart(all_data, target_urls):
             # --- Plotting ---
             fig, ax = plt.subplots(figsize=(10, 5))
             # Grey for missing (0), Red for Down (1), Green for Up (2). White for future (NaN).
-            cmap = ListedColormap(['#cccccc', '#dc3545', '#28a745'])
+            cmap = ListedColormap(['#333333', '#0021A5', ' #FA4616'])
             cmap.set_bad(color='white') # Use white for NaN values (the future)
 
             ax.imshow(grid_df, cmap=cmap, aspect='auto', interpolation='nearest', vmin=0, vmax=2)
 
             # --- Legend ---
             patches = [
-                mpatches.Patch(color='#28a745', label='Up'),
-                mpatches.Patch(color='#dc3545', label='Down'),
-                mpatches.Patch(color='#cccccc', label='Missing')
+                mpatches.Patch(color=' #FA4616', label='Up'),
+                mpatches.Patch(color='#0021A5', label='Down'),
+                mpatches.Patch(color='#333333', label='Missing')
            #     ,mpatches.Patch(color='white', label='Future', edgecolor='black')
             ]
             ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
@@ -256,8 +256,8 @@ def generate_html_report(all_data, current_targets):
         @media (max-width: 768px) { .service-grid { grid-template-columns: 1fr; } }
         .service { background-color: #fff; border: 1px solid #dee2e6; padding: 1.5em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .service h3 { margin-top: 0; }
-        .up { color: #28a745; font-weight: bold; }
-        .down { color: #dc3545; font-weight: bold; }
+        .up { color:  #FA4616; font-weight: bold; }
+        .down { color: #0021A5; font-weight: bold; }
         .unknown { color: #6c757d; font-weight: bold; }
         img { max-width: 100%; height: auto; border-radius: 4px; margin-top: 1em; }
         .footer {  margin-top: 2em;  padding-top: 1em;  border-top: 1px solid #dee2e6;  display: flex;  justify-content: space-between;  align-items: center;}
