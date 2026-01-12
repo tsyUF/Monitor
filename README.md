@@ -34,9 +34,7 @@ You can specify targets in two ways:
 
 **Example `monitoring_targets.txt` with Custom Display Names:**
 ```
-Salesforce=uff.lightning.force.com
-Snowflake=UFL-ADVANCEMENT.snowflakecomputing.com
-Quickbase=ufadvancement.quickbase.com
+Salesforce=https://login.salesforce.com
 myUFL=my.ufl.edu
 Google=google.com
 ```
