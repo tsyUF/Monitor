@@ -2,86 +2,6 @@
   {
     "resource": "www.uff.ufl.edu",
     "status": "Up",
-    "timestamp": "2025-12-18T00:00:00Z"
-  },
-  {
-    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T00:00:00Z"
-  },
-  {
-    "resource": "ufadvancement.quickbase.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T00:00:00Z"
-  },
-  {
-    "resource": "my.ufl.edu",
-    "status": "Up",
-    "timestamp": "2025-12-18T00:00:00Z"
-  },
-  {
-    "resource": "sharepoint.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T00:00:00Z"
-  },
-  {
-    "resource": "outlook.office365.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T00:00:00Z"
-  },
-  {
-    "resource": "google.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T00:00:00Z"
-  },
-  {
-    "resource": "github.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T00:00:00Z"
-  },
-  {
-    "resource": "www.uff.ufl.edu",
-    "status": "Up",
-    "timestamp": "2025-12-18T01:00:00Z"
-  },
-  {
-    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T01:00:00Z"
-  },
-  {
-    "resource": "ufadvancement.quickbase.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T01:00:00Z"
-  },
-  {
-    "resource": "my.ufl.edu",
-    "status": "Up",
-    "timestamp": "2025-12-18T01:00:00Z"
-  },
-  {
-    "resource": "sharepoint.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T01:00:00Z"
-  },
-  {
-    "resource": "outlook.office365.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T01:00:00Z"
-  },
-  {
-    "resource": "google.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T01:00:00Z"
-  },
-  {
-    "resource": "github.com",
-    "status": "Up",
-    "timestamp": "2025-12-18T01:00:00Z"
-  },
-  {
-    "resource": "www.uff.ufl.edu",
-    "status": "Up",
     "timestamp": "2025-12-18T02:00:00Z"
   },
   {
@@ -28678,5 +28598,45 @@
     "resource": "github.com",
     "status": "Up",
     "timestamp": "2026-01-16T18:14:50.351536-05:00"
+  },
+  {
+    "resource": "www.uff.ufl.edu",
+    "status": "Up",
+    "timestamp": "2026-01-16T20:09:20.461892-05:00"
+  },
+  {
+    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
+    "status": "Up",
+    "timestamp": "2026-01-16T20:09:20.959012-05:00"
+  },
+  {
+    "resource": "ufadvancement.quickbase.com",
+    "status": "Up",
+    "timestamp": "2026-01-16T20:09:21.672681-05:00"
+  },
+  {
+    "resource": "my.ufl.edu",
+    "status": "Up",
+    "timestamp": "2026-01-16T20:09:22.045791-05:00"
+  },
+  {
+    "resource": "sharepoint.com",
+    "status": "Up",
+    "timestamp": "2026-01-16T20:09:22.751675-05:00"
+  },
+  {
+    "resource": "outlook.office365.com",
+    "status": "Up",
+    "timestamp": "2026-01-16T20:09:22.843695-05:00"
+  },
+  {
+    "resource": "google.com",
+    "status": "Up",
+    "timestamp": "2026-01-16T20:09:23.034612-05:00"
+  },
+  {
+    "resource": "github.com",
+    "status": "Up",
+    "timestamp": "2026-01-16T20:09:23.220760-05:00"
   }
 ]
