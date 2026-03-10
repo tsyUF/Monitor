@@ -1,46 +1,6 @@
 [
   {
     "resource": "www.uff.ufl.edu",
-    "status": "Down",
-    "timestamp": "2026-02-07T23:35:37.326913-05:00"
-  },
-  {
-    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
-    "status": "Up",
-    "timestamp": "2026-02-07T23:35:37.670958-05:00"
-  },
-  {
-    "resource": "ufadvancement.quickbase.com",
-    "status": "Up",
-    "timestamp": "2026-02-07T23:35:38.160661-05:00"
-  },
-  {
-    "resource": "my.ufl.edu",
-    "status": "Up",
-    "timestamp": "2026-02-07T23:35:38.666473-05:00"
-  },
-  {
-    "resource": "sharepoint.com",
-    "status": "Up",
-    "timestamp": "2026-02-07T23:35:40.291831-05:00"
-  },
-  {
-    "resource": "outlook.office365.com",
-    "status": "Up",
-    "timestamp": "2026-02-07T23:35:40.358414-05:00"
-  },
-  {
-    "resource": "google.com",
-    "status": "Up",
-    "timestamp": "2026-02-07T23:35:40.595580-05:00"
-  },
-  {
-    "resource": "github.com",
-    "status": "Up",
-    "timestamp": "2026-02-07T23:35:40.761442-05:00"
-  },
-  {
-    "resource": "www.uff.ufl.edu",
     "status": "Up",
     "timestamp": "2026-02-08T00:57:52.172624-05:00"
   },
@@ -24198,5 +24158,45 @@
     "resource": "github.com",
     "status": "Up",
     "timestamp": "2026-03-10T00:03:27.701247-04:00"
+  },
+  {
+    "resource": "www.uff.ufl.edu",
+    "status": "Up",
+    "timestamp": "2026-03-10T01:40:52.284866-04:00"
+  },
+  {
+    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
+    "status": "Up",
+    "timestamp": "2026-03-10T01:40:52.871015-04:00"
+  },
+  {
+    "resource": "ufadvancement.quickbase.com",
+    "status": "Up",
+    "timestamp": "2026-03-10T01:40:53.598363-04:00"
+  },
+  {
+    "resource": "my.ufl.edu",
+    "status": "Up",
+    "timestamp": "2026-03-10T01:40:53.991047-04:00"
+  },
+  {
+    "resource": "sharepoint.com",
+    "status": "Up",
+    "timestamp": "2026-03-10T01:40:54.996442-04:00"
+  },
+  {
+    "resource": "outlook.office365.com",
+    "status": "Up",
+    "timestamp": "2026-03-10T01:40:55.061889-04:00"
+  },
+  {
+    "resource": "google.com",
+    "status": "Up",
+    "timestamp": "2026-03-10T01:40:55.215406-04:00"
+  },
+  {
+    "resource": "github.com",
+    "status": "Up",
+    "timestamp": "2026-03-10T01:40:55.272177-04:00"
   }
 ]
