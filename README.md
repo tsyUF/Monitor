@@ -73,7 +73,7 @@ The monitoring dashboard can be viewed by opening `docs/index.html` in a web bro
 
 Add an interactive Streamlit app to explore monitoring results and charts live.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/tsyUF/Monitor/Main/streamlit_app/app.py)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://monitor-da8bkxojxhtc7cscuvbt5f.streamlit.app/)
 
 Quick local run (from the repository root):
 
