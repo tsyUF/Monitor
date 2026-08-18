@@ -1,10 +1,5 @@
 [
   {
-    "resource": "www.uff.ufl.edu",
-    "status": "Up",
-    "timestamp": "2026-07-19T10:25:09.792754-04:00"
-  },
-  {
     "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
     "status": "Up",
     "timestamp": "2026-07-19T10:25:10.138032-04:00"
@@ -17878,5 +17873,45 @@
     "resource": "github.com",
     "status": "Up",
     "timestamp": "2026-08-18T09:36:35.655507-04:00"
+  },
+  {
+    "resource": "www.uff.ufl.edu",
+    "status": "Up",
+    "timestamp": "2026-08-18T10:25:07.422168-04:00"
+  },
+  {
+    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
+    "status": "Up",
+    "timestamp": "2026-08-18T10:25:07.872380-04:00"
+  },
+  {
+    "resource": "ufadvancement.quickbase.com",
+    "status": "Up",
+    "timestamp": "2026-08-18T10:25:08.554362-04:00"
+  },
+  {
+    "resource": "my.ufl.edu",
+    "status": "Up",
+    "timestamp": "2026-08-18T10:25:08.801770-04:00"
+  },
+  {
+    "resource": "sharepoint.com",
+    "status": "Up",
+    "timestamp": "2026-08-18T10:25:09.578224-04:00"
+  },
+  {
+    "resource": "outlook.office365.com",
+    "status": "Up",
+    "timestamp": "2026-08-18T10:25:09.656422-04:00"
+  },
+  {
+    "resource": "google.com",
+    "status": "Up",
+    "timestamp": "2026-08-18T10:25:09.769241-04:00"
+  },
+  {
+    "resource": "github.com",
+    "status": "Up",
+    "timestamp": "2026-08-18T10:25:09.812141-04:00"
   }
 ]
