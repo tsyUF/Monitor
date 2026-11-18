@@ -2,126 +2,6 @@
   {
     "resource": "www.uff.ufl.edu",
     "status": "Down",
-    "timestamp": "2026-10-18T15:08:54.544380-04:00"
-  },
-  {
-    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T15:08:54.798292-04:00"
-  },
-  {
-    "resource": "ufadvancement.quickbase.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T15:08:55.503325-04:00"
-  },
-  {
-    "resource": "my.ufl.edu",
-    "status": "Down",
-    "timestamp": "2026-10-18T15:08:56.007474-04:00"
-  },
-  {
-    "resource": "sharepoint.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T15:08:56.731381-04:00"
-  },
-  {
-    "resource": "outlook.office365.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T15:08:56.781893-04:00"
-  },
-  {
-    "resource": "google.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T15:08:56.916276-04:00"
-  },
-  {
-    "resource": "github.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T15:08:57.035777-04:00"
-  },
-  {
-    "resource": "www.uff.ufl.edu",
-    "status": "Down",
-    "timestamp": "2026-10-18T18:08:14.959765-04:00"
-  },
-  {
-    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T18:08:15.462040-04:00"
-  },
-  {
-    "resource": "ufadvancement.quickbase.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T18:08:16.066564-04:00"
-  },
-  {
-    "resource": "my.ufl.edu",
-    "status": "Down",
-    "timestamp": "2026-10-18T18:08:16.334831-04:00"
-  },
-  {
-    "resource": "sharepoint.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T18:08:17.023148-04:00"
-  },
-  {
-    "resource": "outlook.office365.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T18:08:17.111708-04:00"
-  },
-  {
-    "resource": "google.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T18:08:17.291450-04:00"
-  },
-  {
-    "resource": "github.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T18:08:17.616531-04:00"
-  },
-  {
-    "resource": "www.uff.ufl.edu",
-    "status": "Down",
-    "timestamp": "2026-10-18T20:39:51.164557-04:00"
-  },
-  {
-    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T20:39:51.575118-04:00"
-  },
-  {
-    "resource": "ufadvancement.quickbase.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T20:39:52.027884-04:00"
-  },
-  {
-    "resource": "my.ufl.edu",
-    "status": "Down",
-    "timestamp": "2026-10-18T20:39:52.309817-04:00"
-  },
-  {
-    "resource": "sharepoint.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T20:39:53.084030-04:00"
-  },
-  {
-    "resource": "outlook.office365.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T20:39:53.169692-04:00"
-  },
-  {
-    "resource": "google.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T20:39:53.322304-04:00"
-  },
-  {
-    "resource": "github.com",
-    "status": "Up",
-    "timestamp": "2026-10-18T20:39:53.447253-04:00"
-  },
-  {
-    "resource": "www.uff.ufl.edu",
-    "status": "Down",
     "timestamp": "2026-10-19T01:33:36.442339-04:00"
   },
   {
@@ -5238,5 +5118,45 @@
     "resource": "github.com",
     "status": "Up",
     "timestamp": "2026-11-17T13:57:49.690283-05:00"
+  },
+  {
+    "resource": "www.uff.ufl.edu",
+    "status": "Up",
+    "timestamp": "2026-11-17T20:29:28.578587-05:00"
+  },
+  {
+    "resource": "UFL-ADVANCEMENT.snowflakecomputing.com",
+    "status": "Up",
+    "timestamp": "2026-11-17T20:29:29.033293-05:00"
+  },
+  {
+    "resource": "ufadvancement.quickbase.com",
+    "status": "Up",
+    "timestamp": "2026-11-17T20:29:29.434494-05:00"
+  },
+  {
+    "resource": "my.ufl.edu",
+    "status": "Up",
+    "timestamp": "2026-11-17T20:29:29.886751-05:00"
+  },
+  {
+    "resource": "sharepoint.com",
+    "status": "Up",
+    "timestamp": "2026-11-17T20:29:30.970040-05:00"
+  },
+  {
+    "resource": "outlook.office365.com",
+    "status": "Up",
+    "timestamp": "2026-11-17T20:29:31.152116-05:00"
+  },
+  {
+    "resource": "google.com",
+    "status": "Up",
+    "timestamp": "2026-11-17T20:29:31.305852-05:00"
+  },
+  {
+    "resource": "github.com",
+    "status": "Up",
+    "timestamp": "2026-11-17T20:29:31.325543-05:00"
   }
 ]
